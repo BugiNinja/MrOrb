@@ -1,0 +1,16 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-MrOrb.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\beatasai\Documents\UE_4.18\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h.obj"
+"C:\Users\lassitor\Desktop\MrOrb\MrOrb\MrOrb\Intermediate\Build\Win64\UE4Editor\Development\MrOrb\MrOrb.cpp.obj"
+"C:\Users\lassitor\Desktop\MrOrb\MrOrb\MrOrb\Intermediate\Build\Win64\UE4Editor\Development\MrOrb\MrOrbGameModeBase.cpp.obj"
+"C:\Users\lassitor\Desktop\MrOrb\MrOrb\MrOrb\Intermediate\Build\Win64\UE4Editor\Development\MrOrb\MrOrb.init.gen.cpp.obj"
+"C:\Users\lassitor\Desktop\MrOrb\MrOrb\MrOrb\Intermediate\Build\Win64\UE4Editor\Development\MrOrb\MrOrbGameModeBase.gen.cpp.obj"
+"C:\Users\beatasai\Documents\UE_4.18\Engine\Intermediate\Build\Win64\UE4Editor\Development\MrOrb\PCLaunch.rc.res"
+"C:\Users\beatasai\Documents\UE_4.18\Engine\Intermediate\Build\Win64\UE4Editor\Development\ModuleVersionResource.rc.inl.res"
+/OUT:"C:\Users\lassitor\Desktop\MrOrb\MrOrb\MrOrb\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-MrOrb.lib"
