@@ -1,3 +1,0 @@
-C:\Users\lassitor\Desktop\MrOrb\MrOrb\MrOrb\Source\MrOrb\MrOrb.Build.cs
-C:\Users\lassitor\Desktop\MrOrb\MrOrb\MrOrb\Source\MrOrb.Target.cs
-C:\Users\lassitor\Desktop\MrOrb\MrOrb\MrOrb\Source\MrOrbEditor.Target.cs
