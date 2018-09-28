@@ -17,6 +17,10 @@ public:
 	USpeedComponent();
 
 protected:
+	//int boostPeak;
+	float peakTime;
+	float boostDuration;
+	float boostTime;
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	void UpdateCurrentSpeed();
@@ -29,8 +33,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int BaseSpeed;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int boostPeak;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float SpeedMult;
-	//BaseSpeed*SpeedMult
+	//additional speed from boost
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int BoostedSpeed;
+	//BaseSpeed*SpeedMult+Boost
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int CurrentSpeed;
 	//Default value for BaseSpeed
@@ -54,4 +63,7 @@ public:
 	//Reset SpeedMult to 1
 	UFUNCTION(BlueprintCallable, Category = "SpeedVariable")
 		void ResetSpeedMult();
+	//Additional speed for limited time, Intesity = fixed amount, Scale = percentage of objects speed, Duration = boost length in seconds, Peak = 0.0-1.0 when moving fastest 
+	UFUNCTION(BlueprintCallable, Category = "SpeedVariable")
+		void Boost(int Intesity,float Scale, float Duration, float Peak);
 };

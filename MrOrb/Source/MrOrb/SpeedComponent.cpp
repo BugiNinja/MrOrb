@@ -8,8 +8,8 @@ USpeedComponent::USpeedComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false;
-
+	PrimaryComponentTick.bCanEverTick = true;
+	DefaultSpeed = 1750;
 	// ...
 }
 
@@ -20,6 +20,11 @@ void USpeedComponent::BeginPlay()
 	Super::BeginPlay();
 	BaseSpeed = DefaultSpeed;
 	SpeedMult = 1;
+	boostDuration = 0;
+	peakTime = 0;
+	boostPeak = 0;
+	boostTime = 0;
+	BoostedSpeed = 0;
 	UpdateCurrentSpeed();
 	// ...
 
@@ -56,9 +61,18 @@ void USpeedComponent::ResetSpeedMult()
 	SpeedMult = 1;
 	UpdateCurrentSpeed();
 }
-void USpeedComponent::UpdateCurrentSpeed() 
+void USpeedComponent::Boost(int Intesity, float Scale, float Duration, float Peak) 
 {
-	CurrentSpeed = BaseSpeed * SpeedMult;
+	boostDuration = Duration;
+	boostTime = boostDuration;
+	peakTime = Peak;
+	peakTime = 1 - peakTime;
+	boostPeak = Intesity + CurrentSpeed * Scale;
+}
+
+void USpeedComponent::UpdateCurrentSpeed()
+{
+	CurrentSpeed = BaseSpeed * SpeedMult + BoostedSpeed;
 }
 
 
@@ -66,7 +80,19 @@ void USpeedComponent::UpdateCurrentSpeed()
 void USpeedComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	if (boostTime > 0) {
+		if (boostTime > peakTime * boostDuration) 
+		{
+			BoostedSpeed = boostPeak * ((1 - ((boostTime - (peakTime * boostDuration)) / (boostDuration - (peakTime * boostDuration)))));
+		}
+		else 
+		{
+			BoostedSpeed = boostPeak * (boostTime / (peakTime * boostDuration));
+		}
+		
+		boostTime -= DeltaTime;
+		UpdateCurrentSpeed();
+	}
 	// ...
 }
 
