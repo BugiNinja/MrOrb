@@ -3,18 +3,14 @@
 #include "SpeedComponent.h"
 
 
-// Sets default values for this component's properties
+
 USpeedComponent::USpeedComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 	DefaultSpeed = 1750;
-	// ...
 }
 
 
-// Called when the game starts
 void USpeedComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -26,18 +22,27 @@ void USpeedComponent::BeginPlay()
 	boostTime = 0;
 	BoostedSpeed = 0;
 	UpdateCurrentSpeed();
-	// ...
-
-	
 }
+
+
 void USpeedComponent::AddSpeed(int amount)
 {
 	BaseSpeed += amount;
 	UpdateCurrentSpeed();
 }
+void USpeedComponent::DecreaseSpeed(int amount)
+{
+	BaseSpeed -= amount;
+	UpdateCurrentSpeed();
+}
 void USpeedComponent::AddSpeedMult(float increasement) 
 {
 	SpeedMult += increasement;
+	UpdateCurrentSpeed();
+}
+void USpeedComponent::DecreaseSpeedMult(float decreasement)
+{
+	SpeedMult -= decreasement;
 	UpdateCurrentSpeed();
 }
 void USpeedComponent::MultSpeedMult(float percentage)
@@ -69,10 +74,17 @@ void USpeedComponent::Boost(int Intesity, float Scale, float Duration, float Pea
 	peakTime = 1 - peakTime;
 	boostPeak = Intesity + CurrentSpeed * Scale;
 }
+void USpeedComponent::ResetBoost()
+{
+	BoostedSpeed = 0;
+	boostTime = 0;
+	UpdateCurrentSpeed();
+}
 
 void USpeedComponent::UpdateCurrentSpeed()
 {
-	CurrentSpeed = BaseSpeed * SpeedMult + BoostedSpeed;
+	CurrentSpeed = BaseSpeed * SpeedMult;
+	CurrentBoostedSpeed = CurrentSpeed + BoostedSpeed;
 }
 
 
@@ -81,18 +93,18 @@ void USpeedComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	if (boostTime > 0) {
+		// Increse Boosted Speed Until Peak
 		if (boostTime > peakTime * boostDuration) 
 		{
 			BoostedSpeed = boostPeak * ((1 - ((boostTime - (peakTime * boostDuration)) / (boostDuration - (peakTime * boostDuration)))));
 		}
+		// Decrease Boosted Speed After Peak
 		else 
 		{
 			BoostedSpeed = boostPeak * (boostTime / (peakTime * boostDuration));
 		}
-		
 		boostTime -= DeltaTime;
 		UpdateCurrentSpeed();
 	}
-	// ...
 }
 
