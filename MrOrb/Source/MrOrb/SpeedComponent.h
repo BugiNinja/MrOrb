@@ -19,9 +19,7 @@ protected:
 	int boostPeak;
 	float peakTime;
 	float boostDuration;
-	float stageMult;
-	int stage;
-	int stageAmount;
+	
 
 	virtual void BeginPlay() override;
 	void UpdateCurrentSpeed();
@@ -34,6 +32,12 @@ public:
 		int BaseSpeed;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float SpeedMult;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int Stage;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		float StageMult;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int StageAmount;
 	//additional speed from boost
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int BoostedSpeed;
