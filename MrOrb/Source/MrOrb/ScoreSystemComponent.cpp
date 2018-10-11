@@ -27,9 +27,9 @@ void UScoreSystemComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UScoreSystemComponent::AddScore()
+void UScoreSystemComponent::AddScore(int score)
 {
-	CurrentScore += ScoreToAdd;
+	CurrentScore += score;
 	SetScore();
 	return;
 }
