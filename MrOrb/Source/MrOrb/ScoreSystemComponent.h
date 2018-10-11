@@ -17,7 +17,7 @@ public:
 	UScoreSystemComponent();
 
 	UFUNCTION(BlueprintCallable)
-		void AddScore();
+		void AddScore(int score);
 
 	UFUNCTION(BlueprintCallable)
 		void ResetScore();
