@@ -22,6 +22,9 @@ void USpeedComponent::BeginPlay()
 	boostTime = 0;
 	BoostedSpeed = 0;
 	UpdateCurrentSpeed();
+	Stage = 1;
+	StageAmount = 3;
+	StageMult = 0.5;
 }
 
 
@@ -83,8 +86,34 @@ void USpeedComponent::ResetBoost()
 
 void USpeedComponent::UpdateCurrentSpeed()
 {
-	CurrentSpeed = BaseSpeed * SpeedMult;
+	CurrentSpeed = BaseSpeed * SpeedMult * (1 + Stage * StageMult);
 	CurrentBoostedSpeed = CurrentSpeed + BoostedSpeed;
+}
+
+void USpeedComponent::AddSpeedInStages(int amount) 
+{
+	Stage += amount;
+	if (StageAmount != 0) {
+		if (Stage > StageAmount)
+		{
+			Stage = StageAmount;
+		}
+	}
+}
+
+void USpeedComponent::SetStageSpeedAmount(float Percentage)
+{
+	StageMult = Percentage;
+}
+
+void USpeedComponent::SetStageAmount(int amount) 
+{
+	StageAmount = amount;
+}
+
+void USpeedComponent::ResetStages() 
+{
+	Stage = 1;
 }
 
 
