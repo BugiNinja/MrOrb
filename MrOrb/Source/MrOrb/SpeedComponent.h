@@ -71,6 +71,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SpeedVariable")
 		void SetStageAmount(int amount);
 
+	UFUNCTION(BlueprintCallable, Category = "SpeedVariable")
+
+		int GetStage();
+
 	//Add Speed by Increasing multiplier (SpeedMult + Increasement)
 	UFUNCTION(BlueprintCallable, Category = "SpeedVariable")
 		void AddSpeedMult(float Increasement);
