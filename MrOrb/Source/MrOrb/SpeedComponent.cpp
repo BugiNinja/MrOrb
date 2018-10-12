@@ -101,6 +101,11 @@ void USpeedComponent::AddSpeedInStages(int amount)
 	}
 }
 
+int USpeedComponent::GetStage()
+{
+	return Stage;
+}
+
 void USpeedComponent::SetStageSpeedAmount(float Percentage)
 {
 	StageMult = Percentage;
