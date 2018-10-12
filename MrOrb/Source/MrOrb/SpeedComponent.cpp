@@ -25,6 +25,7 @@ void USpeedComponent::BeginPlay()
 	Stage = 1;
 	StageAmount = 3;
 	StageMult = 0.5;
+	BoostScale = 1;
 }
 
 
@@ -130,12 +131,14 @@ void USpeedComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 		// Increse Boosted Speed Until Peak
 		if (boostTime > peakTime * boostDuration) 
 		{
-			BoostedSpeed = boostPeak * ((1 - ((boostTime - (peakTime * boostDuration)) / (boostDuration - (peakTime * boostDuration)))));
+			BoostScale = ((1 - ((boostTime - (peakTime * boostDuration)) / (boostDuration - (peakTime * boostDuration)))));
+			BoostedSpeed = boostPeak * BoostScale;
 		}
 		// Decrease Boosted Speed After Peak
 		else 
 		{
-			BoostedSpeed = boostPeak * (boostTime / (peakTime * boostDuration));
+			BoostScale = (boostTime / (peakTime * boostDuration));
+			BoostedSpeed = boostPeak * BoostScale;
 		}
 		boostTime -= DeltaTime;
 		UpdateCurrentSpeed();
