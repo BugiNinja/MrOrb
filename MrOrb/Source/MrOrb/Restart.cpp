@@ -6,7 +6,7 @@
 ARestart::ARestart()
 {
 	PrimaryActorTick.bCanEverTick = false;
-
+	//arm = a;
 }
 
 void ARestart::BeginPlay()
@@ -21,10 +21,10 @@ void ARestart::Tick(float DeltaTime)
 
 }
 
-void ARestart::RestartLevel(AActor* player, float highestPoint)
+void ARestart::RestartLevel(UCharacterMovementComponent* player, USpringArmComponent* arm, float highestPoint)
 {
 	// Disable players trail
-	player->SetActorLocation(startPosition);
+	//player->SetActorLocation(startPosition);
 	highestPoint = 0;
 	//cameraBoom->SetActorLocation(startPosition);
 	// Reset points
