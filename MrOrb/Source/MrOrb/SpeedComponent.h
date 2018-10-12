@@ -38,6 +38,8 @@ public:
 		float StageMult;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int StageAmount;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		float BoostScale;
 	//additional speed from boost
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int BoostedSpeed;
@@ -72,7 +74,6 @@ public:
 		void SetStageAmount(int amount);
 
 	UFUNCTION(BlueprintCallable, Category = "SpeedVariable")
-
 		int GetStage();
 
 	//Add Speed by Increasing multiplier (SpeedMult + Increasement)
