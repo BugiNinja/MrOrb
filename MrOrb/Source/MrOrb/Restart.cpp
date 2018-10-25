@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Restart.h"
-
+#include "PaperCharacter.h"
+#include "GameFramework/SpringArmComponent.h"
 
 ARestart::ARestart()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	//arm = a;
 }
 
 void ARestart::BeginPlay()
@@ -21,12 +21,16 @@ void ARestart::Tick(float DeltaTime)
 
 }
 
-void ARestart::RestartLevel(UCharacterMovementComponent* player, USpringArmComponent* arm, float highestPoint)
+void ARestart::RestartLevel(APaperCharacter* player, USpringArmComponent* arm, float highestPoint)
 {
-	// Disable players trail
+	// Disable players trail mby??
+
 	//player->SetActorLocation(startPosition);
-	highestPoint = 0;
-	//cameraBoom->SetActorLocation(startPosition);
+	//arm->SetRelativeLocation(startPosition);
+	//highestPoint = 0;
+
+
+
 	// Reset points
 	// Activate players trail
 }

@@ -4,8 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "GameFramework/SpringArmComponent.h"
-//#include "UPaperCharacter.h" find correct one
 #include "Restart.generated.h"
 
 UCLASS()
@@ -23,15 +21,14 @@ public:
 		AActor* playerStart;
 
 	UPROPERTY(EditAnywhere)
-		TSubclassOf<USpringArmComponent> a;
+		TSubclassOf<class USpringArmComponent> a;
 
 		class USpringArmComponent* arm;
 
-
 	UPROPERTY(EditAnywhere)
-		TSubclassOf<UCharacterMovementComponent> c;
+		TSubclassOf<class APaperCharacter> b;
 
-		class UCharacterMovementComponent* cha;
+		class APaperCharacter* cha;
 
 
 protected:
@@ -41,6 +38,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
-		void RestartLevel(UCharacterMovementComponent* player, USpringArmComponent* arm, float highestPoint);
+		void RestartLevel(APaperCharacter* player, USpringArmComponent* arm, float highestPoint);
 	
 };
