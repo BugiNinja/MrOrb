@@ -21,14 +21,20 @@ public:
 		AActor* playerStart;
 
 	UPROPERTY(EditAnywhere)
-		TSubclassOf<class USpringArmComponent> a;
+		TSubclassOf<class USpringArmComponent> CameraBoom;
 
 		class USpringArmComponent* arm;
 
 	UPROPERTY(EditAnywhere)
-		TSubclassOf<class APaperCharacter> b;
+		TSubclassOf<class APaperCharacter> Paper2D;
 
 		class APaperCharacter* cha;
+
+
+	//UPROPERTY(EditAnywhere)
+	//	TSubclassOf<class UUserWidget> WidgetTemplate;
+	//
+	//	class UUserWidget* WidgetInstance;
 
 
 protected:
@@ -39,5 +45,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void RestartLevel(APaperCharacter* player, USpringArmComponent* arm, float highestPoint);
-	
+
+	bool dead;
 };
