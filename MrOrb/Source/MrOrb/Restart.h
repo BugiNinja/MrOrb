@@ -31,12 +31,6 @@ public:
 		class APaperCharacter* cha;
 
 
-	//UPROPERTY(EditAnywhere)
-	//	TSubclassOf<class UUserWidget> WidgetTemplate;
-	//
-	//	class UUserWidget* WidgetInstance;
-
-
 protected:
 	virtual void BeginPlay() override;
 
@@ -46,5 +40,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void RestartLevel(APaperCharacter* player, USpringArmComponent* arm, float highestPoint);
 
+	UFUNCTION(BlueprintCallable)
+		bool WaitForTouch(ETouchIndex::Type FingerIndex);
+
 	bool dead;
+	bool pressed;
 };

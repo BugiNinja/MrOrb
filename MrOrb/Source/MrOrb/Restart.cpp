@@ -2,6 +2,7 @@
 
 #include "Restart.h"
 #include "PaperCharacter.h"
+#include "Kismet/GameplayStatics.h"
 #include "GameFramework/SpringArmComponent.h"
 
 ARestart::ARestart()
@@ -44,31 +45,32 @@ void ARestart::RestartLevel(APaperCharacter* player, USpringArmComponent* arm, f
 }
 
 
-//bool ARestart::WaitForTouch(ETouchIndex::Type FingerIndex)
-//{
-//	if(pressed)
-//		UE_LOG(LogTemp, Warning, TEXT("true"));
-//	if(!pressed)
-//		UE_LOG(LogTemp, Warning, TEXT("false"));
-//
-//	if (FingerIndex == ETouchIndex::Touch1)
-//	{
-//		if (ETouchType::Began)
-//		{
-//			UE_LOG(LogTemp, Warning, TEXT("Pressed"));
-//			pressed = true;
-//			return false;
-//		}
-//
-//		if (ETouchType::Ended && pressed == true)
-//		{
-//			UE_LOG(LogTemp, Warning, TEXT("Ended"));
-//			pressed = false;
-//			return true;
-//		}
-//	}
-//	return false;
-//}
+bool ARestart::WaitForTouch(ETouchIndex::Type FingerIndex)
+{
+	if(pressed)
+		UE_LOG(LogTemp, Warning, TEXT("true"));
+	if(!pressed)
+		UE_LOG(LogTemp, Warning, TEXT("false"));
+
+	if (FingerIndex == ETouchIndex::Touch1)
+	{
+		if (ETouchType::Began)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Pressed"));
+			pressed = true;
+			return false;
+		}
+
+		if (ETouchType::Ended && pressed == true)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Ended"));
+			pressed = false;
+			return true;
+		}
+	}
+	return false;
+}
+
 
 //void ARestart::EnableGameOverUI()
 //{
