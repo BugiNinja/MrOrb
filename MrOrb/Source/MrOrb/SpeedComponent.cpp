@@ -25,7 +25,7 @@ void USpeedComponent::BeginPlay()
 	Stage = 1;
 	StageAmount = 3;
 	StageMult = 0.5;
-	BoostScale = 1;
+	BoostScale = 0;
 }
 
 
