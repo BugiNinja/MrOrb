@@ -43,5 +43,5 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
-		void RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpringArmComponent* arm, float highestPoint, FVector CameraPos, float CameraZoom, float PlayerHeight, float PlayerHighestPoint);
+		void RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpringArmComponent* arm, FVector CameraPos, float CameraZoom, float PlayerHeight, float PlayerHighestPoint);
 };

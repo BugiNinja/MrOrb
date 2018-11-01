@@ -21,15 +21,13 @@ void ARestart::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void ARestart::RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpringArmComponent* arm, float highestPoint, FVector CameraPos, float CameraZoom, float PlayerHeight, float PlayerHighestPoint)
+void ARestart::RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpringArmComponent* arm, FVector CameraPos, float CameraZoom, float PlayerHeight, float PlayerHighestPoint)
 {
 	///do smooth transition from current height to start position (lerp)
 
 	arm->SetWorldLocation(CameraPos);
 	cam->SetOrthoWidth(CameraZoom);
 	player->SetActorLocation(startPosition, false, nullptr, ETeleportType::ResetPhysics);
-
-	highestPoint = player->GetActorLocation().Z;
 
 	UE_LOG(LogTemp, Warning, TEXT("RESTART"));
 }
