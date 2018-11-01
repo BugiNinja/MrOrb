@@ -28,8 +28,13 @@ public:
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class APaperCharacter> Paper2D;
 
-		class APaperCharacter* cha;
+		class APaperCharacter* player;
 
+
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class UCameraComponent> Camera;
+
+		class UCameraComponent* cam;
 
 protected:
 	virtual void BeginPlay() override;
@@ -38,11 +43,5 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
-		void RestartLevel(APaperCharacter* player, USpringArmComponent* arm, float highestPoint);
-
-	UFUNCTION(BlueprintCallable)
-		bool WaitForTouch(ETouchIndex::Type FingerIndex);
-
-	bool dead;
-	bool pressed;
+		void RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpringArmComponent* arm, float highestPoint, FVector CameraPos, float CameraZoom);
 };
