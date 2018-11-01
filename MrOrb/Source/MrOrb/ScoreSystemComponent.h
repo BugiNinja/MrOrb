@@ -47,10 +47,10 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int ScoreToAdd;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		int SweetSpotComboAmount;
+		int SweetSpotComboAmount;;
 
 	///////
-	ACharacter * player;
+	//ACharacter * player;
 
 public:
 	// Called every frame
