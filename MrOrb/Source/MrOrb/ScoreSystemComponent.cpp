@@ -1,9 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ScoreSystemComponent.h"
-#include "Kismet/GameplayStatics.h"
-#include "Engine/World.h"
-
+//#include "Kismet/GameplayStatics.h"
+//#include "Engine/World.h"
+//#include "ConstructorHelpers.h"
+//#include "PaperSprite.h"
 
 // Sets default values for this component's properties
 UScoreSystemComponent::UScoreSystemComponent()
@@ -11,6 +12,9 @@ UScoreSystemComponent::UScoreSystemComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 	DefaultScore = 0;
 	ScoreToAdd = 10;
+
+	//static ConstructorHelpers::FObjectFinder<UPaperSprite> PerfectSpriteObject(TEXT("/Game/Art/Sprites/UI_Perfect.UI_Perfect'"));
+	//PerfectSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/UI_Perfect.UI_Perfect"), NULL, LOAD_None, NULL);
 }
 
 
@@ -21,8 +25,8 @@ void UScoreSystemComponent::BeginPlay()
 	CurrentScore = DefaultScore;
 	SetScore();
 
-	//////
-	player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+
+	//player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	
 }
 
@@ -53,21 +57,21 @@ int UScoreSystemComponent::GetSweetSpotComboAmount(){ return SweetSpotComboAmoun
 
 int UScoreSystemComponent::CalculateCombo(int combo)
 {
-	if (combo < 2)
+	if (combo < 5)
 	{
 		return 0;
 	}
-	else if (combo == 2)
-	{
-		return 1;
-	}
-	else if (combo % 10 == 0)
+	else if (combo % 15 == 0)
 	{
 		return 3;
 	}
-	else if (combo % 5 == 0)
+	else if (combo % 10 == 0)
 	{
 		return 2;
+	}
+	else if (combo % 5 == 0)
+	{
+		return 1;
 	}
 	else
 	{
@@ -80,7 +84,6 @@ void UScoreSystemComponent::SetSweetSpotComboAmount(int amount)
 	SweetSpotComboAmount = amount;
 	return;
 }
-
 void UScoreSystemComponent::SetScore()
 {
 	DefaultScoreInString = FString::FromInt(CurrentScore);
