@@ -18,12 +18,18 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void AddScore(int score);
-
 	UFUNCTION(BlueprintCallable)
 		void ResetScore();
+	UFUNCTION(BlueprintCallable)
+		int CalculateCombo(int combo);
 
 	UFUNCTION(BlueprintCallable)
 		int GetCurrentScore();
+	UFUNCTION(BlueprintCallable)
+		int GetSweetSpotComboAmount();
+
+	UFUNCTION(BlueprintCallable)
+		void SetSweetSpotComboAmount(int amount);
 
 	void SetScore();
 
@@ -40,6 +46,11 @@ protected:
 		int HighScore;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int ScoreToAdd;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int SweetSpotComboAmount;
+
+	///////
+	ACharacter * player;
 
 public:
 	// Called every frame
