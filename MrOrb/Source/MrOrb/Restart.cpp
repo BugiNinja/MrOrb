@@ -30,8 +30,7 @@ void ARestart::RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpr
 	arm->SetWorldLocation(CameraPos);
 	cam->SetOrthoWidth(CameraZoom);
 
-	PlayerHeight = startPosition.Z;
-	highestPoint = startPosition.Z;
+	highestPoint = player->GetActorLocation().Z;
 
 	UE_LOG(LogTemp, Warning, TEXT("RESTART"));
 }
