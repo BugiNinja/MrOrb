@@ -56,6 +56,10 @@ public:
 	UPROPERTY(EditAnywhere)
 		int DefaultSpeed;
 
+	//set Default speed
+	UFUNCTION(BlueprintCallable, Category = "SpeedVariable")
+		void SetDefaultSpeed(int Amount);
+
 	//Add Fixed amount to BaseSpeed (BaseSpeed + Amount)
 	UFUNCTION(BlueprintCallable, Category = "SpeedVariable")
 		void AddSpeed(int Amount);

@@ -7,7 +7,7 @@
 USpeedComponent::USpeedComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-	DefaultSpeed = 1750;
+	DefaultSpeed = 2000;
 }
 
 
@@ -28,6 +28,10 @@ void USpeedComponent::BeginPlay()
 	BoostScale = 0;
 }
 
+void USpeedComponent::SetDefaultSpeed(int amount)
+{
+	DefaultSpeed = amount;
+}
 
 void USpeedComponent::AddSpeed(int amount)
 {
