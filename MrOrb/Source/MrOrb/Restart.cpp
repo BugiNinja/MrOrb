@@ -25,9 +25,9 @@ void ARestart::RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpr
 {
 	///do smooth transition from current height to start position (lerp)
 
-	player->SetActorLocation(startPosition, false, nullptr, ETeleportType::ResetPhysics);
 	arm->SetWorldLocation(CameraPos);
 	cam->SetOrthoWidth(CameraZoom);
+	player->SetActorLocation(startPosition, false, nullptr, ETeleportType::ResetPhysics);
 
 	UE_LOG(LogTemp, Warning, TEXT("RESTART"));
 }

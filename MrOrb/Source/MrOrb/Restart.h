@@ -30,7 +30,6 @@ public:
 
 		class APaperCharacter* player;
 
-
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class UCameraComponent> Camera;
 
