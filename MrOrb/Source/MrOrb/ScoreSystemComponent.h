@@ -13,7 +13,6 @@ class MRORB_API UScoreSystemComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this component's properties
 	UScoreSystemComponent();
 
 	UFUNCTION(BlueprintCallable)
@@ -31,29 +30,23 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void SetSweetSpotComboAmount(int amount);
 
-	void SetScore();
+	void SetScore(); //Debug
 
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	int DefaultScore;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		FString DefaultScoreInString;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int CurrentScore;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) //Does nothing yet
 		int HighScore;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int ScoreToAdd;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int SweetSpotComboAmount;;
 
-	///////
-	//ACharacter * player;
-
 public:
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 
 };

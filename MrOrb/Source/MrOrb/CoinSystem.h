@@ -13,20 +13,15 @@ class MRORB_API UCoinSystem : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
 	UCoinSystem();
 
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int CoinValue;
 
 	bool ComboOn;
-
-	//class APaperCharacter* testplayer;
-	//class UScoreSystemComponent* testscore;
 
 	class UPaperSpriteComponent* CurrentSprite;
 	class APaperCharacter* CurrentPlayer;
@@ -46,13 +41,8 @@ protected:
 		void SetupCoin();
 
 	UFUNCTION(BlueprintCallable)
-		void CoinChange();
-
-	UFUNCTION(BlueprintCallable)
 		void CollidedWithPlayer();
 public:	
-	// Called every frame
-
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 

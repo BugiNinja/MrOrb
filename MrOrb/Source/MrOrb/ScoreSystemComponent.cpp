@@ -1,36 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ScoreSystemComponent.h"
-//#include "Kismet/GameplayStatics.h"
-//#include "Engine/World.h"
-//#include "ConstructorHelpers.h"
-//#include "PaperSprite.h"
 
-// Sets default values for this component's properties
 UScoreSystemComponent::UScoreSystemComponent()
 {
-	PrimaryComponentTick.bCanEverTick = true;
-	DefaultScore = 0;
+	PrimaryComponentTick.bCanEverTick = false;
 	ScoreToAdd = 10;
-
-	//static ConstructorHelpers::FObjectFinder<UPaperSprite> PerfectSpriteObject(TEXT("/Game/Art/Sprites/UI_Perfect.UI_Perfect'"));
 }
 
-
-// Called when the game starts
 void UScoreSystemComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	CurrentScore = DefaultScore;
+	CurrentScore = 0;
 	SetScore();
-	
-}
-
-
-// Called every frame
-void UScoreSystemComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
 void UScoreSystemComponent::AddScore(int score)
@@ -43,15 +25,20 @@ void UScoreSystemComponent::AddScore(int score)
 void UScoreSystemComponent::ResetScore()
 {
 	CurrentScore = 0;
-	SweetSpotComboAmount = 0;
+	SetSweetSpotComboAmount(0);
 	SetScore();
 	return;
 }
 
+//Get functions
 int UScoreSystemComponent::GetCurrentScore(){ return CurrentScore; }
-
 int UScoreSystemComponent::GetSweetSpotComboAmount(){ return SweetSpotComboAmount; }
 
+//Set functions
+void UScoreSystemComponent::SetSweetSpotComboAmount(int amount) {SweetSpotComboAmount = amount; return; }
+void UScoreSystemComponent::SetScore(){ DefaultScoreInString = FString::FromInt(CurrentScore); return; } //Debug
+
+//Calculate combo and display text
 int UScoreSystemComponent::CalculateCombo(int combo)
 {
 	if (combo < 5)
@@ -74,17 +61,6 @@ int UScoreSystemComponent::CalculateCombo(int combo)
 	{
 		return 0;
 	}
-}
-
-void UScoreSystemComponent::SetSweetSpotComboAmount(int amount)
-{
-	SweetSpotComboAmount = amount;
-	return;
-}
-void UScoreSystemComponent::SetScore()
-{
-	DefaultScoreInString = FString::FromInt(CurrentScore);
-	return;
 }
 
 

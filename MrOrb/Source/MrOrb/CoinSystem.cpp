@@ -1,34 +1,20 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CoinSystem.h"
-//#include "Kismet/GameplayStatics.h"
-//#include "Engine/World.h"
 #include "ScoreSystemComponent.h"
-//#include "PaperCharacter.h"
-//#include "GameFramework/Controller.h"
-//#include "EngineUtils.h"
-//#include "UnrealMathUtility.h"
 #include "PaperSprite.h"
 #include "PaperSpriteComponent.h"
-#include "ConstructorHelpers.h"
 
-
-// Sets default values for this component's properties
 UCoinSystem::UCoinSystem()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
 }
 
-
-// Called when the game starts
 void UCoinSystem::BeginPlay()
 {
 	Super::BeginPlay();
 
-	///////////Load Assets for coins////////////
+	//Load Assets for coins
 	FiftyCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Triangle.SPR_Triangle"), NULL, LOAD_None, NULL);
 	FiveHundredCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Rectangle.SPR_Rectangle"), NULL, LOAD_None, NULL);
 	ThousandCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Poly5.SPR_Poly5"), NULL, LOAD_None, NULL);
@@ -36,15 +22,9 @@ void UCoinSystem::BeginPlay()
 	SecondMaterial = LoadObject<UMaterial>(NULL, TEXT("/Game/Art/Materials/M_Collectible.M_Collectible"), NULL, LOAD_None, NULL);
 }
 
-
-// Called every frame
-void UCoinSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-}
-
 void UCoinSystem::SetObjects(APaperCharacter * player, UScoreSystemComponent* score, UPaperSpriteComponent* sprite)
 {
+	//Assign properties
 	CurrentPlayer = player;
 	CurrentScoreSystem = score;
 	CurrentSprite = sprite;
@@ -53,6 +33,7 @@ void UCoinSystem::SetObjects(APaperCharacter * player, UScoreSystemComponent* sc
 
 void UCoinSystem::SetupCoin()
 {
+	//Set as 50 coin or 500 coins
 	int32 number = 5;
 	if (number == FMath::RandRange(0, 5))
 	{
@@ -68,8 +49,19 @@ void UCoinSystem::SetupCoin()
 	}
 }
 
-void UCoinSystem::CoinChange()
+void UCoinSystem::CollidedWithPlayer()
 {
+	//Player has collided with this object
+	CurrentScoreSystem->AddScore(CoinValue);
+	CurrentSprite->SetSprite(nullptr);
+
+}
+
+void UCoinSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	//Change coins on runtime depending on Combo
 	if (CurrentScoreSystem->GetSweetSpotComboAmount() > 4 && !ComboOn)
 	{
 		ComboOn = true;
@@ -87,7 +79,7 @@ void UCoinSystem::CoinChange()
 		}
 		return;
 	}
-	else if(CurrentScoreSystem->GetSweetSpotComboAmount() <= 1 && ComboOn)
+	else if (CurrentScoreSystem->GetSweetSpotComboAmount() <= 1 && ComboOn)
 	{
 		ComboOn = false;
 		if (CoinValue == 100)
@@ -108,12 +100,6 @@ void UCoinSystem::CoinChange()
 	{
 		return;
 	}
-}
-
-void UCoinSystem::CollidedWithPlayer()
-{
-	CurrentScoreSystem->AddScore(CoinValue);
-	CurrentSprite->SetSprite(nullptr);
 
 }
 
