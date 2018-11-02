@@ -147,5 +147,9 @@ void USpeedComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 		boostTime -= DeltaTime;
 		UpdateCurrentSpeed();
 	}
+	else if (BoostScale != 0) {
+		BoostScale = 0;
+		BoostedSpeed = 0;
+	}
 }
 
