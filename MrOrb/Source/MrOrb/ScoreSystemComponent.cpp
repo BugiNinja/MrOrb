@@ -14,7 +14,6 @@ UScoreSystemComponent::UScoreSystemComponent()
 	ScoreToAdd = 10;
 
 	//static ConstructorHelpers::FObjectFinder<UPaperSprite> PerfectSpriteObject(TEXT("/Game/Art/Sprites/UI_Perfect.UI_Perfect'"));
-	//PerfectSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/UI_Perfect.UI_Perfect"), NULL, LOAD_None, NULL);
 }
 
 
@@ -24,9 +23,6 @@ void UScoreSystemComponent::BeginPlay()
 	Super::BeginPlay();
 	CurrentScore = DefaultScore;
 	SetScore();
-
-
-	//player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	
 }
 
@@ -47,6 +43,7 @@ void UScoreSystemComponent::AddScore(int score)
 void UScoreSystemComponent::ResetScore()
 {
 	CurrentScore = 0;
+	SweetSpotComboAmount = 0;
 	SetScore();
 	return;
 }
