@@ -23,7 +23,8 @@ void ARestart::Tick(float DeltaTime)
 
 void ARestart::RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpringArmComponent* arm, FVector CameraPos, float CameraZoom)
 {
-	///do smooth transition from current height to start position (lerp)
+	///do smooth transition from current height to start position (lerp) 
+	// TODO: take ref to points and level gen and restart both
 
 	arm->SetWorldLocation(CameraPos);
 	cam->SetOrthoWidth(CameraZoom);
