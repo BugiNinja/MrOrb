@@ -80,6 +80,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SpeedVariable")
 		int GetStage();
 
+	UFUNCTION(BlueprintCallable, Category = "SpeedVariable")
+		int GetCurrentSpeed();
+
 	//Add Speed by Increasing multiplier (SpeedMult + Increasement)
 	UFUNCTION(BlueprintCallable, Category = "SpeedVariable")
 		void AddSpeedMult(float Increasement);

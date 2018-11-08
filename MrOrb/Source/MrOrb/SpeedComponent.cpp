@@ -111,6 +111,11 @@ int USpeedComponent::GetStage()
 	return Stage;
 }
 
+int USpeedComponent::GetCurrentSpeed()
+{
+	return CurrentSpeed;
+}
+
 void USpeedComponent::SetStageSpeedAmount(float Percentage)
 {
 	StageMult = Percentage;
