@@ -22,17 +22,14 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Player")
 		TSubclassOf<class USpringArmComponent> CameraBoom;
-
 		class USpringArmComponent* arm;
 
 	UPROPERTY(EditAnywhere, Category = "Player")
 		TSubclassOf<class APaperCharacter> Paper2D;
-
 		class APaperCharacter* player;
 
 	UPROPERTY(EditAnywhere, Category = "Player")
 		TSubclassOf<class UCameraComponent> Camera;
-
 		class UCameraComponent* cam;
 
 protected:
