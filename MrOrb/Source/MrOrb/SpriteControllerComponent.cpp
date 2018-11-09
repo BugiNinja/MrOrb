@@ -19,9 +19,9 @@ USpriteControllerComponent::USpriteControllerComponent()
 
 	DefaultCountdownTime = 5;  //Set timer here
 
-	XNormalSizeAmount = 0.03f; //
+	XNormalSizeAmount = 0.01f; //
 	XSpeedSizeAmount = 0.01f; //  Increase and decrease player size by these on collision
-	YNormalSizeAmount = 0.02f; //
+	YNormalSizeAmount = 0.01f; //
 	YSpeedSizeAmount = 0.005f; //
 
 	CountdownTime = DefaultCountdownTime;
@@ -40,11 +40,14 @@ void USpriteControllerComponent::SetAnimationProperties(FVector vector)
 {
 	SpeedStage = (float)CurrentSpeedComponent->GetStage();
 	HitVectorPoint = vector;
-	float DotP = FVector::DotProduct(HitVectorPoint, CurrentSpriteFlip->GetForwardVector());
-	float Angle = FMath::RadiansToDegrees(acosf(-DotP));
-	FRotator tr = CurrentSpriteFlip->GetComponentRotation();
-	tr.Pitch += Angle;
-	CurrentSpriteFlip->SetRelativeRotation(tr);
+	float HitDotP = FVector::DotProduct(HitVectorPoint, CurrentSpriteFlip->GetForwardVector());
+	float HitAngle = FMath::RadiansToDegrees(acosf(-HitDotP));
+	FRotator Rotation = CurrentSpriteFlip->GetComponentRotation();
+	Rotation.Pitch += HitAngle;
+	Rotation.Roll = 0;
+	Rotation.Yaw = 0;
+	//CurrentSpriteFlip->SetRelativeRotation(Rotation);
+	CurrentSpriteFlip->SetRelativeRotationExact(Rotation);
 
 }
 
