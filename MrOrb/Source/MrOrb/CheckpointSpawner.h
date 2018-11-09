@@ -28,12 +28,6 @@ public:
 		TSubclassOf<class APlayerController> playerControllerPointer;
 	class APlayerController* controller;
 
-	//UPROPERTY(EditAnywhere)
-	//	UPaperSpriteComponent* spriteComponent;
-	//
-	//UPROPERTY(EditAnywhere)
-	//	UPaperSprite* sprite;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -45,8 +39,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void Setup(APaperCharacter* playerPtr, UCameraComponent* cameraPtr, APlayerController* controllerPtr);
 
-	UFUNCTION(BlueprintCallable)
-		void SpawnLöpö(AActor* c);
+	//UFUNCTION(BlueprintCallable)
+	//	void SpawnLöpö(AActor* c);
 
 	void Spawn();
 	float GetDistance(float a, float b);

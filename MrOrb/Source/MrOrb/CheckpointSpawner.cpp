@@ -74,12 +74,7 @@ void ACheckpointSpawner::Spawn()
 	//FVector Location(0.0f, 0.0f, 0.0f);
 	//FRotator Rotation(0.0f, 0.0f, 0.0f);
 	//FActorSpawnParameters SpawnInfo;
-	//ACheckpointObstacle* obj = GetWorld()->SpawnActor<ACheckpointObstacle>(Location, Rotation, SpawnInfo);
-	//
-	//UPaperSpriteComponent* SpriteComponent = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("RootComponent"));
-
-	SpawnLöpö();
-	
+	//ACheckpointObstacle* obj = GetWorld()->SpawnActor<ACheckpointObstacle>(Location, Rotation, SpawnInfo);	
 }
 
 float ACheckpointSpawner::GetDistance(float HighestPoint, float DistanceBetweenSpawns)
@@ -99,9 +94,9 @@ float ACheckpointSpawner::GetHighestPoint()
 	}
 }
 
-void ACheckpointSpawner::SpawnLöpö(AActor* c)
-{
-	/// wat
-	FOutputDeviceNull ar;
-	c->CallFunctionByNameWithArguments(TEXT("test"), ar, NULL, true);
-}
+//void ACheckpointSpawner::SpawnLöpö(AActor* c)
+//{
+//	/// wat
+//	FOutputDeviceNull ar;
+//	c->CallFunctionByNameWithArguments(TEXT("test"), ar, NULL, true);
+//}
