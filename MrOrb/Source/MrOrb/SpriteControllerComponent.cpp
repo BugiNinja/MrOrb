@@ -8,8 +8,8 @@
 #include "TimerManager.h"
 
 //Debugs
-#include <EngineGlobals.h>
-#include <Runtime/Engine/Classes/Engine/Engine.h>
+//#include <EngineGlobals.h>
+//#include <Runtime/Engine/Classes/Engine/Engine.h>
 
 USpriteControllerComponent::USpriteControllerComponent()
 {
@@ -19,8 +19,8 @@ USpriteControllerComponent::USpriteControllerComponent()
 
 	DefaultCountdownTime = 5;  //Set timer here
 
-	XNormalSizeAmount = 0.04f; //
-	XSpeedSizeAmount = 0.005f; //  Increase and decrease player size by these on collision
+	XNormalSizeAmount = 0.03f; //
+	XSpeedSizeAmount = 0.01f; //  Increase and decrease player size by these on collision
 	YNormalSizeAmount = 0.02f; //
 	YSpeedSizeAmount = 0.005f; //
 
@@ -36,9 +36,15 @@ void USpriteControllerComponent::SetSpriteComponent(UPaperFlipbookComponent* spr
 	return;
 }
 
-void USpriteControllerComponent::SetAnimationSpeedStage()
+void USpriteControllerComponent::SetAnimationProperties(FVector vector)
 {
 	SpeedStage = (float)CurrentSpeedComponent->GetStage();
+	HitVectorPoint = vector;
+	float DotP = FVector::DotProduct(HitVectorPoint, CurrentSpriteFlip->GetForwardVector());
+	float Angle = FMath::RadiansToDegrees(acosf(-DotP));
+	FRotator tr = CurrentSpriteFlip->GetComponentRotation();
+	tr.Pitch += Angle;
+	CurrentSpriteFlip->SetRelativeRotation(tr);
 
 }
 

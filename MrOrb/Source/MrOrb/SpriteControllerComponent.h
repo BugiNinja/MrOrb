@@ -25,7 +25,7 @@ protected:
 		void SetSpriteComponent(UPaperFlipbookComponent * sprite, USpeedComponent* speedcomponent);
 
 	UFUNCTION(BlueprintCallable)
-		void SetAnimationSpeedStage();
+		void SetAnimationProperties(FVector vector);
 
 	UFUNCTION(BlueprintCallable)
 		void PlayAnimation();
@@ -38,6 +38,7 @@ protected:
 
 	FVector DefaultPlayerSize;
 	FVector HitPlayerSize;
+	FVector HitVectorPoint;
 
 	bool bHasDoneFirstAnimation;
 	float SpeedStage;
