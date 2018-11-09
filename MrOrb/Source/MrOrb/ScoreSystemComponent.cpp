@@ -63,7 +63,7 @@ void UScoreSystemComponent::ResetScore()
 	CurrentScore = 0;
 	SecureScore = 0;
 	SetSweetSpotComboAmount(0);
-	ScoreRenderText->SetText(FString::FromInt(0.005));
+	ScoreRenderText->SetText(FString::FromInt(CurrentScore));
 	return;
 }
 
