@@ -14,6 +14,7 @@ class MRORB_API UScoreSystemComponent : public UActorComponent
 
 public:
 	UScoreSystemComponent();
+	class UTextRenderComponent* ScoreRenderText;
 
 	UFUNCTION(BlueprintCallable)
 		void AddScore(int score);
@@ -26,14 +27,26 @@ public:
 		int GetCurrentScore();
 	UFUNCTION(BlueprintCallable)
 		int GetSweetSpotComboAmount();
+	UFUNCTION(BlueprintCallable)
+		bool GetScoreHasChanged();
 
 	UFUNCTION(BlueprintCallable)
 		void SetSweetSpotComboAmount(int amount);
+	UFUNCTION(BlueprintCallable)
+		void SetScoreHasChanged(bool changed);
+	UFUNCTION(BlueprintCallable)
+		void SetScoreRenderText(UTextRenderComponent* render);
 
-	void SetScore(); //Debug
+	void SetScore();
 
 protected:
 	virtual void BeginPlay() override;
+
+	FTimerHandle Timer;
+	int Countdown;
+	int ScoreOverFlow;
+	int SecureScore;
+	float speed;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		FString DefaultScoreInString;
@@ -45,6 +58,8 @@ protected:
 		int ScoreToAdd;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int SweetSpotComboAmount;;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		bool bScoreHasChanged;
 
 public:
 
