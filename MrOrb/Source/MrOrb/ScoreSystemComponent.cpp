@@ -33,15 +33,15 @@ void UScoreSystemComponent::AddScore(int score)
 		Countdown = (score) + 1;
 		if (Countdown < 100)
 		{
-			speed = 0.1f;
+			speed = 0.005f;
 		}
 		else if (Countdown < 500)
 		{
-			speed = 0.05f;
+			speed = 0.005f;
 		}
 		else 
 		{
-			speed = 0.01f;
+			speed = 0.005f;
 		}
 		GetOwner()->GetWorldTimerManager().SetTimer(Timer, this, &UScoreSystemComponent::SetScore, speed, true, 0.0f);
 	}
@@ -63,7 +63,7 @@ void UScoreSystemComponent::ResetScore()
 	CurrentScore = 0;
 	SecureScore = 0;
 	SetSweetSpotComboAmount(0);
-	ScoreRenderText->SetText(FString::FromInt(CurrentScore));
+	ScoreRenderText->SetText(FString::FromInt(0.005));
 	return;
 }
 
@@ -86,15 +86,15 @@ void UScoreSystemComponent::SetScore()
 {
 	if (Countdown < 100)
 	{
-		speed = 0.5f;
+		speed = 0.005f;
 	}
 	else if (Countdown < 500)
 	{
-		speed = 0.2f;
+		speed = 0.005f;
 	}
 	else
 	{
-		speed = 0.1f;
+		speed = 0.005f;
 	}
 
 	if (ScoreOverFlow != 0)
