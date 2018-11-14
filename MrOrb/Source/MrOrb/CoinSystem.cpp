@@ -37,13 +37,13 @@ void UCoinSystem::SetupCoin()
 	int32 number = 5;
 	if (number == FMath::RandRange(0, 5))
 	{
-		CoinValue = 500;
+		CoinValue = 500; // 500
 		CurrentSprite->SetSprite(FiveHundredCoinSprite);
 		CurrentSprite->SetMaterial(0, SecondMaterial);
 	}
 	else
 	{
-		CoinValue = 50;
+		CoinValue = 50; // 50
 		CurrentSprite->SetSprite(FiftyCoinSprite);
 		CurrentSprite->SetMaterial(0, SecondMaterial);
 	}
@@ -68,13 +68,13 @@ void UCoinSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 		if (CoinValue == 50)
 		{
 			CurrentSprite->SetSprite(ThousandCoinSprite);
-			CoinValue = 100;
+			CoinValue = 100; // 100
 			CurrentSprite->SetMaterial(0, FirstMaterial);
 		}
 		else if (CoinValue == 500)
 		{
 			CurrentSprite->SetSprite(FiftyCoinSprite);
-			CoinValue = 1000;
+			CoinValue = 1000; // 1000
 			CurrentSprite->SetMaterial(0, FirstMaterial);
 		}
 		return;
@@ -85,13 +85,13 @@ void UCoinSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 		if (CoinValue == 100)
 		{
 			CurrentSprite->SetSprite(FiftyCoinSprite);
-			CoinValue = 50;
+			CoinValue = 50; // 50
 			CurrentSprite->SetMaterial(0, SecondMaterial);
 		}
 		else if (CoinValue == 1000)
 		{
 			CurrentSprite->SetSprite(FiveHundredCoinSprite);
-			CoinValue = 500;
+			CoinValue = 500; // 500
 			CurrentSprite->SetMaterial(0, SecondMaterial);
 		}
 		return;

@@ -29,6 +29,8 @@ public:
 		int GetSweetSpotComboAmount();
 	UFUNCTION(BlueprintCallable)
 		bool GetScoreHasChanged();
+	UFUNCTION(BlueprintCallable)
+		float GetScoreUIHeight();
 
 	UFUNCTION(BlueprintCallable)
 		void SetSweetSpotComboAmount(int amount);
@@ -36,6 +38,8 @@ public:
 		void SetScoreHasChanged(bool changed);
 	UFUNCTION(BlueprintCallable)
 		void SetScoreRenderText(UTextRenderComponent* render);
+	UFUNCTION(BlueprintCallable)
+		void SetScoreUIHeight(float height);
 
 	void SetScore();
 
@@ -46,7 +50,13 @@ protected:
 	int Countdown;
 	int ScoreOverFlow;
 	int SecureScore;
+
 	float speed;
+	float ScoreUIHeight;
+
+	bool Slowing;
+	bool Completed;
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		FString DefaultScoreInString;
