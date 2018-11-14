@@ -26,9 +26,37 @@ void ARestart::RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpr
 	///do smooth transition from current height to start position (lerp) 
 	// TODO: take ref to points and level gen and restart both
 
-	arm->SetWorldLocation(CameraPos);
-	cam->SetOrthoWidth(CameraZoom);
-	player->SetActorLocation(startPosition, false, nullptr, ETeleportType::ResetPhysics);
+	if (arm != nullptr)
+	{
+		arm->SetWorldLocation(CameraPos);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("arm null"));
+	}
+	
+	if (cam != nullptr)
+	{
+		cam->SetOrthoWidth(CameraZoom);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("cam null"));
+	}
+
+	if (player != nullptr)
+	{
+		player->SetActorLocation(startPosition, false, nullptr, ETeleportType::ResetPhysics);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("player null"));
+	}
 
 	UE_LOG(LogTemp, Warning, TEXT("RESTART"));
+}
+
+void ARestart::Continue()
+{
+	// code
 }
