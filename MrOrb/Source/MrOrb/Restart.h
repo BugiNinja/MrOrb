@@ -40,4 +40,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpringArmComponent* arm, FVector CameraPos, float CameraZoom);
+
+	UFUNCTION(BlueprintCallable)
+		void Continue();
 };
