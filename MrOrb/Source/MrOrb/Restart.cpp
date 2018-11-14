@@ -21,7 +21,7 @@ void ARestart::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void ARestart::RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpringArmComponent* arm, FVector CameraPos, float CameraZoom, float& HighestPoint, float& PlayerHeight, bool& onWall, bool& boost, bool& startIdle, bool& dead)
+void ARestart::RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpringArmComponent* arm, FVector CameraPos, float CameraZoom, float& HighestPoint, float& PlayerHeight)
 {
 	///do smooth transition from current height to start position (lerp) 
 	// TODO: take ref to points and level gen and restart both
@@ -30,13 +30,9 @@ void ARestart::RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpr
 	cam->SetOrthoWidth(CameraZoom);
 	player->SetActorLocation(startPosition, false, nullptr, ETeleportType::ResetPhysics);
 
-
 	HighestPoint = PlayerHeight = 0;
 
 	UE_LOG(LogTemp, Warning, TEXT("RESTART"));
-
-	onWall = startIdle = true;
-	boost = dead = false;
 }
 
 void ARestart::Continue()
