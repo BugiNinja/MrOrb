@@ -20,6 +20,7 @@ void UScoreSystemComponent::BeginPlay()
 	Super::BeginPlay();
 	CurrentScore = 0;
 	Countdown = 0;
+	Slowing = false;
 }
 
 void UScoreSystemComponent::AddScore(int score)
@@ -30,32 +31,31 @@ void UScoreSystemComponent::AddScore(int score)
 	SecureScore += score;
 	if (Countdown <= 0)
 	{
-		Countdown = (score) + 1;
-		if (Countdown < 100)
+		Countdown = (score);
+
+		if (Countdown < 10)
 		{
-			speed = 0.005f;
+			speed = 0.1f;
+		}
+		else if (Countdown < 100)
+		{
+			speed = 0.02f;
 		}
 		else if (Countdown < 500)
 		{
-			speed = 0.005f;
+			speed = 0.01f;
 		}
-		else 
+		else
 		{
 			speed = 0.005f;
 		}
+
 		GetOwner()->GetWorldTimerManager().SetTimer(Timer, this, &UScoreSystemComponent::SetScore, speed, true, 0.0f);
 	}
-	else
-	{
-		ScoreOverFlow += (score) + 1;
-	}
-
-	//for (size_t i = 0; i < score; i++)
+	//else
 	//{
-	//	CurrentScore += 1;
-	//	SetScore();
+	//	ScoreOverFlow += (score);
 	//}
-	//return;
 }
 
 void UScoreSystemComponent::ResetScore()
@@ -64,6 +64,10 @@ void UScoreSystemComponent::ResetScore()
 	SecureScore = 0;
 	SetSweetSpotComboAmount(0);
 	ScoreRenderText->SetText(FString::FromInt(CurrentScore));
+	GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
+	Countdown = 0;
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("RESET"));
+	SetScoreUIHeight(0.0f);
 	return;
 }
 
@@ -72,6 +76,8 @@ int UScoreSystemComponent::GetCurrentScore(){ return CurrentScore; }
 int UScoreSystemComponent::GetSweetSpotComboAmount(){ return SweetSpotComboAmount; }
 
 bool UScoreSystemComponent::GetScoreHasChanged(){ return bScoreHasChanged;}
+
+float UScoreSystemComponent::GetScoreUIHeight(){ return ScoreUIHeight; }
 
 //Set functions
 void UScoreSystemComponent::SetSweetSpotComboAmount(int amount) {SweetSpotComboAmount = amount; return; }
@@ -82,42 +88,62 @@ void UScoreSystemComponent::SetScoreRenderText(UTextRenderComponent* render)
 	ScoreRenderText = render;
 }
 
+void UScoreSystemComponent::SetScoreUIHeight(float height) { ScoreUIHeight = height; return; }
+
 void UScoreSystemComponent::SetScore()
 {
-	if (Countdown < 100)
+	if (--Countdown < 10)
 	{
-		speed = 0.005f;
-	}
-	else if (Countdown < 500)
-	{
-		speed = 0.005f;
-	}
-	else
-	{
-		speed = 0.005f;
+		if (--Countdown <= -1)
+		{
+			if (CurrentScore != SecureScore)
+			{
+				GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("CLEARING TIMER and STARTING"));
+
+				Countdown = (SecureScore - CurrentScore);
+
+				if (Countdown < 10)
+				{
+					speed = 0.1f;
+				}
+				else if (Countdown < 100)
+				{
+					speed = 0.02f;
+				}
+				else if (Countdown < 500)
+				{
+					speed = 0.01f;
+				}
+				else
+				{
+					speed = 0.005f;
+				}
+
+				GetOwner()->GetWorldTimerManager().SetTimer(Timer, this, &UScoreSystemComponent::SetScore, speed, true, 0.0f);
+
+			}
+			else
+			{
+				GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
+				bScoreHasChanged = false;
+				Slowing = false;
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("ALL DONE!!"));
+				return;
+			}
+		}
+		else if(!Slowing)
+		{
+			Slowing = true;
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, TEXT("SLOWING!!"));
+			GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
+			speed = 0.1f;
+			GetOwner()->GetWorldTimerManager().SetTimer(Timer, this, &UScoreSystemComponent::SetScore, speed, true, 0.0f);
+		}
 	}
 
-	if (ScoreOverFlow != 0)
-	{
-		Countdown += ScoreOverFlow;
-		ScoreOverFlow = 0;
-	}
-	if (--Countdown <= 0)
-	{
-		GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
-		bScoreHasChanged = false;
-		if (CurrentScore != SecureScore) // This should not happen
-		{
-			CurrentScore = SecureScore;
-			ScoreRenderText->SetText(FString::FromInt(CurrentScore));
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("THIS SHOULD NOT HAPPEN"));
-		}
-		return;
-	}
-	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Increasing!"));
-	CurrentScore += 1;
-	ScoreRenderText->SetText(FString::FromInt(CurrentScore));
-	//DefaultScoreInString = FString::FromInt(CurrentScore);  
+		CurrentScore += 1;
+		ScoreRenderText->SetText(FString::FromInt(CurrentScore));
 } 
 
 //Calculate combo and display text
