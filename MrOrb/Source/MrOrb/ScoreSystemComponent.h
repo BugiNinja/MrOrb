@@ -33,6 +33,11 @@ public:
 		float GetScoreUIHeight();
 
 	UFUNCTION(BlueprintCallable)
+		int LoadScoreFromMemory();
+	UFUNCTION(BlueprintCallable)
+		void ChangeScoreInMemory(int amounttochange);
+
+	UFUNCTION(BlueprintCallable)
 		void SetSweetSpotComboAmount(int amount);
 	UFUNCTION(BlueprintCallable)
 		void SetScoreHasChanged(bool changed);
@@ -51,13 +56,16 @@ protected:
 	int ScoreOverFlow;
 	int SecureScore;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int SavedLifetimeScore;
+
 	float speed;
 	float ScoreUIHeight;
 
 	bool Slowing;
-	bool Completed;
 
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		FString SavedLifetimeScoreInString;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		FString DefaultScoreInString;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)

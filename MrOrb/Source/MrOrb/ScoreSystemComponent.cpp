@@ -4,6 +4,8 @@
 #include "TimerManager.h"
 #include "GameFramework/Actor.h"
 #include "Components/TextRenderComponent.h"
+#include "PlayerSaveData.h"
+#include "Kismet/GameplayStatics.h"
 
 //Debugs
 #include <EngineGlobals.h>
@@ -13,6 +15,7 @@ UScoreSystemComponent::UScoreSystemComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	ScoreToAdd = 10;
+
 }
 
 void UScoreSystemComponent::BeginPlay()
@@ -21,6 +24,9 @@ void UScoreSystemComponent::BeginPlay()
 	CurrentScore = 0;
 	Countdown = 0;
 	Slowing = false;
+	
+	//SavedLifetimeScoreInString = FString::FromInt(PlayerScoreToDisplay);
+
 }
 
 void UScoreSystemComponent::AddScore(int score)
@@ -29,6 +35,8 @@ void UScoreSystemComponent::AddScore(int score)
 	//SetScore();
 	bScoreHasChanged = true;
 	SecureScore += score;
+	ChangeScoreInMemory(score);
+
 	if (Countdown <= 0)
 	{
 		Countdown = (score);
@@ -78,6 +86,27 @@ int UScoreSystemComponent::GetSweetSpotComboAmount(){ return SweetSpotComboAmoun
 bool UScoreSystemComponent::GetScoreHasChanged(){ return bScoreHasChanged;}
 
 float UScoreSystemComponent::GetScoreUIHeight(){ return ScoreUIHeight; }
+
+int UScoreSystemComponent::LoadScoreFromMemory()
+{
+	UPlayerSaveData* LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
+	LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
+	SavedLifetimeScore = LoadGameInstance->PlayerScore;
+	return SavedLifetimeScore;
+}
+
+void UScoreSystemComponent::ChangeScoreInMemory(int amounttochange)
+{
+	UPlayerSaveData* SaveGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
+	UPlayerSaveData* LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
+	LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
+
+	SaveGameInstance->PlayerScore = (LoadGameInstance->PlayerScore + amounttochange);
+	SavedLifetimeScore = LoadGameInstance->PlayerScore;
+	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
+
+	return;
+}
 
 //Set functions
 void UScoreSystemComponent::SetSweetSpotComboAmount(int amount) {SweetSpotComboAmount = amount; return; }
