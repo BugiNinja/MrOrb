@@ -63,7 +63,7 @@ void UScoreSystemComponent::ResetScore()
 	CurrentScore = 0;
 	SecureScore = 0;
 	SetSweetSpotComboAmount(0);
-	ScoreRenderText->SetText(FString::FromInt(CurrentScore));
+	ScoreRenderText->SetText("");
 	GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
 	Countdown = 0;
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("RESET"));
@@ -82,12 +82,7 @@ float UScoreSystemComponent::GetScoreUIHeight(){ return ScoreUIHeight; }
 //Set functions
 void UScoreSystemComponent::SetSweetSpotComboAmount(int amount) {SweetSpotComboAmount = amount; return; }
 void UScoreSystemComponent::SetScoreHasChanged(bool changed) { bScoreHasChanged = changed; return; }
-
-void UScoreSystemComponent::SetScoreRenderText(UTextRenderComponent* render)
-{
-	ScoreRenderText = render;
-}
-
+void UScoreSystemComponent::SetScoreRenderText(UTextRenderComponent* render){ ScoreRenderText = render; }
 void UScoreSystemComponent::SetScoreUIHeight(float height) { ScoreUIHeight = height; return; }
 
 void UScoreSystemComponent::SetScore()
