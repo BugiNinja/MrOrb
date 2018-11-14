@@ -7,6 +7,7 @@
 #include "CheckpointObstacle.h"
 #include "PaperSpriteComponent.h"
 #include "PaperSprite.h"
+#include "Engine.h"
 
 // Sets default values
 ACheckpointSpawner::ACheckpointSpawner()
