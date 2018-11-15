@@ -24,6 +24,7 @@ void UScoreSystemComponent::BeginPlay()
 	CurrentScore = 0;
 	Countdown = 0;
 	Slowing = false;
+	LoadScoreFromMemory();
 	
 	//SavedLifetimeScoreInString = FString::FromInt(PlayerScoreToDisplay);
 
@@ -87,13 +88,14 @@ bool UScoreSystemComponent::GetScoreHasChanged(){ return bScoreHasChanged;}
 
 float UScoreSystemComponent::GetScoreUIHeight(){ return ScoreUIHeight; }
 
+int UScoreSystemComponent::GetLifetimeScore(){ return SavedLifetimeScore; }
+
 int UScoreSystemComponent::LoadScoreFromMemory()
 {
 	UPlayerSaveData* LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
 	LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
-
-	// Create save object
 	UPlayerSaveData* SaveGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
+
 	// Check if the save game file exists
 	if (UGameplayStatics::DoesSaveGameExist(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex))
 	{
@@ -107,7 +109,7 @@ int UScoreSystemComponent::LoadScoreFromMemory()
 			SavedLifetimeScore = LoadGameInstance->PlayerScore;
 		//}
 	}
-	else
+	else // Create new save
 	{
 		SaveGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
 		SaveGameInstance->PlayerScore = SavedLifetimeScore;

@@ -31,6 +31,8 @@ public:
 		bool GetScoreHasChanged();
 	UFUNCTION(BlueprintCallable)
 		float GetScoreUIHeight();
+	UFUNCTION(BlueprintCallable)
+		int GetLifetimeScore();
 
 	UFUNCTION(BlueprintCallable)
 		int LoadScoreFromMemory();
