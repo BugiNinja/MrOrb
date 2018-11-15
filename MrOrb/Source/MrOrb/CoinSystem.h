@@ -23,10 +23,14 @@ protected:
 
 	bool ComboOn;
 	bool bComboCoin;
+	int ComboCoin;
+	bool bCanPickUp;
 
 	class UPaperSpriteComponent* CurrentSprite;
+	UPaperSpriteComponent* Glow;
 	class APaperCharacter* CurrentPlayer;
 	class UScoreSystemComponent* CurrentScoreSystem;
+	class USceneComponent* ThisObject;
 
 	class UPaperSprite* FiftyCoinSprite;
 	UPaperSprite* FiveHundredCoinSprite;
@@ -36,13 +40,13 @@ protected:
 	UMaterial* SecondMaterial;
 
 	UFUNCTION(BlueprintCallable)
-		void SetObjects(APaperCharacter* player, UScoreSystemComponent* score, UPaperSpriteComponent* sprite);
+		void SetObjects(USceneComponent* thisobject, APaperCharacter* player, UScoreSystemComponent* score, UPaperSpriteComponent* sprite, UPaperSpriteComponent* glow);
 
 	UFUNCTION(BlueprintCallable)
 		void SetupCoin();
 
 	UFUNCTION(BlueprintCallable)
-		void CollidedWithPlayer();
+		bool CollidedWithPlayer();
 public:	
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

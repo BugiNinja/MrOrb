@@ -174,7 +174,7 @@ void UScoreSystemComponent::SetScore()
 				}
 				else
 				{
-					speed = 0.005f;
+					speed = 0.001f;
 				}
 
 				GetOwner()->GetWorldTimerManager().SetTimer(Timer, this, &UScoreSystemComponent::SetScore, speed, true, 0.0f);
