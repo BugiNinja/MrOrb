@@ -22,6 +22,7 @@ protected:
 		int CoinValue;
 
 	bool ComboOn;
+	bool bComboCoin;
 
 	class UPaperSpriteComponent* CurrentSprite;
 	class APaperCharacter* CurrentPlayer;

@@ -31,14 +31,15 @@ public:
 		bool GetScoreHasChanged();
 	UFUNCTION(BlueprintCallable)
 		float GetScoreUIHeight();
-	UFUNCTION(BlueprintCallable)
-		int GetLifetimeScore();
+
 
 	UFUNCTION(BlueprintCallable)
 		int LoadScoreFromMemory();
 	UFUNCTION(BlueprintCallable)
 		void ChangeScoreInMemory(int amounttochange);
 
+	UFUNCTION(BlueprintCallable)
+		void SetLifetimeScore();
 	UFUNCTION(BlueprintCallable)
 		void SetSweetSpotComboAmount(int amount);
 	UFUNCTION(BlueprintCallable)
