@@ -25,6 +25,7 @@ void UScoreSystemComponent::BeginPlay()
 	Countdown = 0;
 	Slowing = false;
 	LoadScoreFromMemory();
+	SetLifetimeScore();
 	
 	//SavedLifetimeScoreInString = FString::FromInt(PlayerScoreToDisplay);
 
@@ -36,7 +37,9 @@ void UScoreSystemComponent::AddScore(int score)
 	//SetScore();
 	bScoreHasChanged = true;
 	SecureScore += score;
+
 	ChangeScoreInMemory(score);
+	SetLifetimeScore();
 
 	if (Countdown <= 0)
 	{
@@ -88,8 +91,6 @@ bool UScoreSystemComponent::GetScoreHasChanged(){ return bScoreHasChanged;}
 
 float UScoreSystemComponent::GetScoreUIHeight(){ return ScoreUIHeight; }
 
-int UScoreSystemComponent::GetLifetimeScore(){ return SavedLifetimeScore; }
-
 int UScoreSystemComponent::LoadScoreFromMemory()
 {
 	UPlayerSaveData* LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
@@ -100,7 +101,7 @@ int UScoreSystemComponent::LoadScoreFromMemory()
 	if (UGameplayStatics::DoesSaveGameExist(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex))
 	{
 		// Check if the save object has an instance of the object stored
-		SaveGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::LoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
+		//SaveGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::LoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
 		// Check to see if information about our interactable is stored
 		//if (FInteractableInfo* loadedInfo = SaveGameInstance->PlayerScore()->Find(this->GetName()))
 		//{
@@ -126,9 +127,10 @@ void UScoreSystemComponent::ChangeScoreInMemory(int amounttochange)
 	UPlayerSaveData* LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
 	LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
 
-	SaveGameInstance->PlayerScore = (LoadGameInstance->PlayerScore + amounttochange);
-	SavedLifetimeScore = LoadGameInstance->PlayerScore;
+	int temp = LoadGameInstance->PlayerScore;
+	SaveGameInstance->PlayerScore = temp + amounttochange;
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
+	SavedLifetimeScore = LoadGameInstance->PlayerScore;
 
 	return;
 }
@@ -138,6 +140,12 @@ void UScoreSystemComponent::SetSweetSpotComboAmount(int amount) {SweetSpotComboA
 void UScoreSystemComponent::SetScoreHasChanged(bool changed) { bScoreHasChanged = changed; return; }
 void UScoreSystemComponent::SetScoreRenderText(UTextRenderComponent* render){ ScoreRenderText = render; }
 void UScoreSystemComponent::SetScoreUIHeight(float height) { ScoreUIHeight = height; return; }
+
+void UScoreSystemComponent::SetLifetimeScore() 
+{ 
+	LoadScoreFromMemory();
+	SavedLifetimeScoreInString = FString::FromInt(SavedLifetimeScore);
+}
 
 void UScoreSystemComponent::SetScore()
 {

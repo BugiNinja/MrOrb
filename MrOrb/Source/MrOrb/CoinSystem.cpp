@@ -35,6 +35,10 @@ void UCoinSystem::SetupCoin()
 {
 	//Set as 50 coin or 500 coins
 	int32 number = 5;
+	//if (this->ComponentHasTag(TEXT("ComboCoin")))
+	//{
+	//	bComboCoin = true;
+	//}
 	if (number == FMath::RandRange(0, 5))
 	{
 		CoinValue = 500; // 500
