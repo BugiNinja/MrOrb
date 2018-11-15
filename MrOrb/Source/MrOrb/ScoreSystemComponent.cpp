@@ -91,7 +91,30 @@ int UScoreSystemComponent::LoadScoreFromMemory()
 {
 	UPlayerSaveData* LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
 	LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
-	SavedLifetimeScore = LoadGameInstance->PlayerScore;
+
+	// Create save object
+	UPlayerSaveData* SaveGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
+	// Check if the save game file exists
+	if (UGameplayStatics::DoesSaveGameExist(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex))
+	{
+		// Check if the save object has an instance of the object stored
+		SaveGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::LoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
+		// Check to see if information about our interactable is stored
+		//if (FInteractableInfo* loadedInfo = SaveGameInstance->PlayerScore()->Find(this->GetName()))
+		//{
+		//	// We know that we have information stored in the save file - now load this into the game instance
+		//	Cast<UPlayerSaveData>(GetGameInstance())->GetInteractableInfoMap()->Add(this->GetName(), *loadedInfo);
+			SavedLifetimeScore = LoadGameInstance->PlayerScore;
+		//}
+	}
+	else
+	{
+		SaveGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
+		SaveGameInstance->PlayerScore = SavedLifetimeScore;
+		UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
+	}
+
+
 	return SavedLifetimeScore;
 }
 
