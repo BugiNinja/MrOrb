@@ -9,10 +9,6 @@
 //#include "Kismet/KismetMaterialLibrary.h"
 //Runtime/Engine/Classes/Kismet/
 
-//Debugs
-#include <EngineGlobals.h>
-#include <Runtime/Engine/Classes/Engine/Engine.h>
-
 UCoinSystem::UCoinSystem()
 {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -23,11 +19,11 @@ void UCoinSystem::BeginPlay()
 	Super::BeginPlay();
 
 	//Load Assets for coins
-	FiftyCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Triangle.SPR_Triangle"), NULL, LOAD_None, NULL);
-	FiveHundredCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Rectangle.SPR_Rectangle"), NULL, LOAD_None, NULL);
-	ThousandCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Poly5.SPR_Poly5"), NULL, LOAD_None, NULL);
-	FirstMaterial = LoadObject<UMaterial>(NULL, TEXT("/Game/Art/Materials/SPR_Player1.SPR_Player1"), NULL, LOAD_None, NULL);
-	SecondMaterial = LoadObject<UMaterial>(NULL, TEXT("/Game/Art/Materials/M_Collectible.M_Collectible"), NULL, LOAD_None, NULL);
+	//FiftyCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Triangle.SPR_Triangle"), NULL, LOAD_None, NULL);
+	//FiveHundredCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Rectangle.SPR_Rectangle"), NULL, LOAD_None, NULL);
+	//ThousandCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Poly5.SPR_Poly5"), NULL, LOAD_None, NULL);
+	//FirstMaterial = LoadObject<UMaterial>(NULL, TEXT("/Game/Art/Materials/SPR_Player1.SPR_Player1"), NULL, LOAD_None, NULL);
+	//SecondMaterial = LoadObject<UMaterial>(NULL, TEXT("/Game/Art/Materials/M_Collectible.M_Collectible"), NULL, LOAD_None, NULL);
 
 	//MaterialParameterCollectionAsset->SetVectorParameterValue(ParameterName, ParameterValue);
 
@@ -36,8 +32,6 @@ void UCoinSystem::BeginPlay()
 	//inst = GetWorld()->GetParameterCollectionInstance(MaterialParameterCollectionAsset);
 	//inst->SetVectorParameterValue(tt);
 
-	Color1 = FLinearColor(50.0f, 29.32826f, 0.0f);
-	Color2 = FLinearColor(90.0f, 10.0f, 20.0f);
 }
 
 void UCoinSystem::SetObjects(USceneComponent* thisobject, APaperCharacter * player, UScoreSystemComponent* score, UPaperSpriteComponent* sprite, UPaperSpriteComponent* glow, UBoxComponent* collider)
@@ -66,7 +60,7 @@ void UCoinSystem::SetupCoin()
 		//Glow->ToggleVisibility();
 		bComboCoin = true;
 		ComboCoin = 5;
-		CurrentSprite->SetMaterial(0, SecondMaterial);
+		//CurrentSprite->SetMaterial(0, SecondMaterial);
 	}
 	else if (ThisObject->ComponentHasTag("10ComboCoin"))
 	{
@@ -77,7 +71,7 @@ void UCoinSystem::SetupCoin()
 		//Glow->ToggleVisibility();
 		bComboCoin = true;
 		ComboCoin = 10;
-		CurrentSprite->SetMaterial(0, SecondMaterial);
+		//CurrentSprite->SetMaterial(0, SecondMaterial);
 	}
 	else if (ThisObject->ComponentHasTag("15ComboCoin"))
 	{
@@ -88,19 +82,19 @@ void UCoinSystem::SetupCoin()
 		//Glow->ToggleVisibility();
 		bComboCoin = true;
 		ComboCoin = 15;
-		CurrentSprite->SetMaterial(0, SecondMaterial);
+		//CurrentSprite->SetMaterial(0, SecondMaterial);
 	}
 	else if (number == FMath::RandRange(0, 5))
 	{
 		CoinValue = 500; // 500
-		CurrentSprite->SetSprite(FiveHundredCoinSprite);
-		CurrentSprite->SetMaterial(0, SecondMaterial);
+		//CurrentSprite->SetSprite(FiveHundredCoinSprite);
+		//CurrentSprite->SetMaterial(0, SecondMaterial);
 	}
 	else
 	{
 		CoinValue = 50; // 50
-		CurrentSprite->SetSprite(FiftyCoinSprite);
-		CurrentSprite->SetMaterial(0, SecondMaterial);
+		//CurrentSprite->SetSprite(FiftyCoinSprite);
+		//CurrentSprite->SetMaterial(0, SecondMaterial);
 	}
 }
 
@@ -159,13 +153,18 @@ void UCoinSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 14 && ComboCoin == 15 && !ComboOn)
+	if (CurrentScoreSystem->GetSweetSpotComboAmount() <= 1 && !ComboOn)
+	{
+		return;
+	}
+
+	else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 14 && ComboCoin == 15 && !ComboOn)
 	{
 		ComboOn = true;
 		Glow->SetVisibility(true);
 		CurrentSprite->SetVisibility(true);
 		//CurrentSprite->ToggleVisibility();
-		CurrentSprite->SetSprite(FiveHundredCoinSprite);
+		//CurrentSprite->SetSprite(FiveHundredCoinSprite);
 		//Glow->ToggleVisibility();
 		bCanPickUp = true;
 		return;
@@ -176,7 +175,7 @@ void UCoinSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 		Glow->SetVisibility(true);
 		CurrentSprite->SetVisibility(true);
 		//CurrentSprite->ToggleVisibility();
-		CurrentSprite->SetSprite(FiveHundredCoinSprite);
+		//CurrentSprite->SetSprite(FiveHundredCoinSprite);
 		//Glow->ToggleVisibility();
 		bCanPickUp = true;
 		return;
@@ -187,7 +186,7 @@ void UCoinSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 		Glow->SetVisibility(true);
 		CurrentSprite->SetVisibility(true);
 		//CurrentSprite->ToggleVisibility();
-		CurrentSprite->SetSprite(FiveHundredCoinSprite);
+		//CurrentSprite->SetSprite(FiveHundredCoinSprite);
 		//Glow->ToggleVisibility();
 		bCanPickUp = true;
 		return;
@@ -212,13 +211,13 @@ void UCoinSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 
 		if (CoinValue == 50)
 		{
-			CurrentSprite->SetSprite(FiftyCoinSprite);
+			//CurrentSprite->SetSprite(FiftyCoinSprite);
 			CoinValue = 100; // 100
 			//CurrentSprite->SetMaterial(0, FirstMaterial);
 		}
 		else if (CoinValue == 500)
 		{
-			CurrentSprite->SetSprite(FiveHundredCoinSprite);
+			//CurrentSprite->SetSprite(FiveHundredCoinSprite);
 			CoinValue = 1000; // 1000
 			//CurrentSprite->SetMaterial(0, FirstMaterial);
 		}

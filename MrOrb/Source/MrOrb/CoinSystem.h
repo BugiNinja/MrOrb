@@ -27,8 +27,8 @@ protected:
 	int ComboCoin;
 	bool bCanPickUp;
 
-	FLinearColor Color1;
-	FLinearColor Color2;
+	//FLinearColor Color1;
+	//FLinearColor Color2;
 
 	class UPaperSpriteComponent* CurrentSprite;
 	UPaperSpriteComponent* Glow;
@@ -36,12 +36,12 @@ protected:
 	class UScoreSystemComponent* CurrentScoreSystem;
 	class USceneComponent* ThisObject;
 
-	class UPaperSprite* FiftyCoinSprite;
-	UPaperSprite* FiveHundredCoinSprite;
-	UPaperSprite* ThousandCoinSprite;
+	//class UPaperSprite* FiftyCoinSprite;
+	//UPaperSprite* FiveHundredCoinSprite;
+	//UPaperSprite* ThousandCoinSprite;
 
-	UMaterial* FirstMaterial;
-	UMaterial* SecondMaterial;
+	//UMaterial* FirstMaterial;
+	//UMaterial* SecondMaterial;
 
 	class UBoxComponent* BoxCollider;
 
