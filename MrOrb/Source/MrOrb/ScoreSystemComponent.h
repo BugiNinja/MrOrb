@@ -67,6 +67,8 @@ protected:
 
 	bool Slowing;
 
+	FString ScoreString;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		FString SavedLifetimeScoreInString;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)

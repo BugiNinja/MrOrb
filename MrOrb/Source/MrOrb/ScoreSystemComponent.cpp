@@ -75,7 +75,7 @@ void UScoreSystemComponent::ResetScore()
 	CurrentScore = 0;
 	SecureScore = 0;
 	SetSweetSpotComboAmount(0);
-	ScoreRenderText->SetText("");
+	ScoreRenderText->SetText(FText::FromString(""));
 	GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
 	Countdown = 0;
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("RESET"));
@@ -200,7 +200,8 @@ void UScoreSystemComponent::SetScore()
 	}
 
 		CurrentScore += 1;
-		ScoreRenderText->SetText(FString::FromInt(CurrentScore));
+		ScoreString = FString::FromInt(CurrentScore);
+		ScoreRenderText->SetText(FText::FromString(ScoreString));
 } 
 
 //Calculate combo and display text
