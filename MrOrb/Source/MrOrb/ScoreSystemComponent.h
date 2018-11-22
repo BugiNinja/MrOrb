@@ -33,12 +33,12 @@ public:
 		float GetScoreUIHeight();
 
 
-	UFUNCTION(BlueprintCallable)
-		int LoadScoreFromMemory();
-	UFUNCTION(BlueprintCallable)
-		void ChangeScoreInMemory(int amounttochange);
+	UFUNCTION(BlueprintCallable) //Load Score
+		int LoadScoreFromMemory();  
+	UFUNCTION(BlueprintCallable) //Save Score
+		void ChangeScoreInMemory(int amounttochange); 
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable) 
 		void SetLifetimeScore();
 	UFUNCTION(BlueprintCallable)
 		void SetSweetSpotComboAmount(int amount);
@@ -56,7 +56,6 @@ protected:
 
 	FTimerHandle Timer;
 	int Countdown;
-	int ScoreOverFlow;
 	int SecureScore;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -71,16 +70,14 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		FString SavedLifetimeScoreInString;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		FString DefaultScoreInString;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	//	FString DefaultScoreInString;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int CurrentScore;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) //Does nothing yet
-		int HighScore;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		int ScoreToAdd;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int SweetSpotComboAmount;;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		bool bScoreHasChanged;
 

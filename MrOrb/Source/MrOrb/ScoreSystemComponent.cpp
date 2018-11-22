@@ -2,19 +2,18 @@
 
 #include "ScoreSystemComponent.h"
 #include "TimerManager.h"
-#include "GameFramework/Actor.h"
+//#include "GameFramework/Actor.h"
 #include "Components/TextRenderComponent.h"
 #include "PlayerSaveData.h"
 #include "Kismet/GameplayStatics.h"
 
 //Debugs
-#include <EngineGlobals.h>
-#include <Runtime/Engine/Classes/Engine/Engine.h>
+//#include <EngineGlobals.h>
+//#include <Runtime/Engine/Classes/Engine/Engine.h>
 
 UScoreSystemComponent::UScoreSystemComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
-	ScoreToAdd = 10;
 
 }
 
@@ -26,15 +25,11 @@ void UScoreSystemComponent::BeginPlay()
 	Slowing = false;
 	LoadScoreFromMemory();
 	SetLifetimeScore();
-	
-	//SavedLifetimeScoreInString = FString::FromInt(PlayerScoreToDisplay);
 
 }
 
 void UScoreSystemComponent::AddScore(int score)
 {
-	//CurrentScore += score;
-	//SetScore();
 	bScoreHasChanged = true;
 	SecureScore += score;
 
@@ -64,10 +59,6 @@ void UScoreSystemComponent::AddScore(int score)
 
 		GetOwner()->GetWorldTimerManager().SetTimer(Timer, this, &UScoreSystemComponent::SetScore, speed, true, 0.0f);
 	}
-	//else
-	//{
-	//	ScoreOverFlow += (score);
-	//}
 }
 
 void UScoreSystemComponent::ResetScore()
@@ -100,15 +91,7 @@ int UScoreSystemComponent::LoadScoreFromMemory()
 	// Check if the save game file exists
 	if (UGameplayStatics::DoesSaveGameExist(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex))
 	{
-		// Check if the save object has an instance of the object stored
-		//SaveGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::LoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
-		// Check to see if information about our interactable is stored
-		//if (FInteractableInfo* loadedInfo = SaveGameInstance->PlayerScore()->Find(this->GetName()))
-		//{
-		//	// We know that we have information stored in the save file - now load this into the game instance
-		//	Cast<UPlayerSaveData>(GetGameInstance())->GetInteractableInfoMap()->Add(this->GetName(), *loadedInfo);
-			SavedLifetimeScore = LoadGameInstance->PlayerScore;
-		//}
+		SavedLifetimeScore = LoadGameInstance->PlayerScore;
 	}
 	else // Create new save
 	{
