@@ -23,8 +23,12 @@ protected:
 
 	bool ComboOn;
 	bool bComboCoin;
+	bool bResetNeeded;
 	int ComboCoin;
 	bool bCanPickUp;
+
+	//FLinearColor Color1;
+	//FLinearColor Color2;
 
 	class UPaperSpriteComponent* CurrentSprite;
 	UPaperSpriteComponent* Glow;
@@ -32,21 +36,29 @@ protected:
 	class UScoreSystemComponent* CurrentScoreSystem;
 	class USceneComponent* ThisObject;
 
-	class UPaperSprite* FiftyCoinSprite;
-	UPaperSprite* FiveHundredCoinSprite;
-	UPaperSprite* ThousandCoinSprite;
+	//class UPaperSprite* FiftyCoinSprite;
+	//UPaperSprite* FiveHundredCoinSprite;
+	//UPaperSprite* ThousandCoinSprite;
 
-	UMaterial* FirstMaterial;
-	UMaterial* SecondMaterial;
+	//UMaterial* FirstMaterial;
+	//UMaterial* SecondMaterial;
+
+	class UBoxComponent* BoxCollider;
 
 	UFUNCTION(BlueprintCallable)
-		void SetObjects(USceneComponent* thisobject, APaperCharacter* player, UScoreSystemComponent* score, UPaperSpriteComponent* sprite, UPaperSpriteComponent* glow);
+		void SetObjects(USceneComponent* thisobject, APaperCharacter* player, UScoreSystemComponent* score, UPaperSpriteComponent* sprite, UPaperSpriteComponent* glow, UBoxComponent* collider);
 
 	UFUNCTION(BlueprintCallable)
 		void SetupCoin();
 
 	UFUNCTION(BlueprintCallable)
 		bool CollidedWithPlayer();
+
+	UFUNCTION(BlueprintCallable)
+		void ResetCoin();
+
+	UFUNCTION(BlueprintCallable)
+		bool GetResetNeeded();
 public:	
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
