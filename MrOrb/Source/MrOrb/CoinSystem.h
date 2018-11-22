@@ -24,11 +24,9 @@ protected:
 	bool ComboOn;
 	bool bComboCoin;
 	bool bResetNeeded;
-	int ComboCoin;
 	bool bCanPickUp;
 
-	//FLinearColor Color1;
-	//FLinearColor Color2;
+	int ComboCoin;
 
 	class UPaperSpriteComponent* CurrentSprite;
 	UPaperSpriteComponent* Glow;
