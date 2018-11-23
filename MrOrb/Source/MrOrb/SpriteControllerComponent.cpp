@@ -41,11 +41,24 @@ void USpriteControllerComponent::SetAnimationProperties(FVector vector)
 	SpeedStage = (float)CurrentSpeedComponent->GetStage();
 	HitVectorPoint = vector;
 	float HitDotP = FVector::DotProduct(HitVectorPoint, CurrentSpriteFlip->GetForwardVector());
+	//UE_LOG(LogTemp, Warning, TEXT("HitDotP before %f"), HitDotP);
+	if (HitDotP > 1)
+	{
+		HitDotP = 1;
+	}
+	if (HitDotP < -1)
+	{
+		HitDotP = -1;
+	}
+	//UE_LOG(LogTemp, Warning, TEXT("HitDotP after %f"), HitDotP);
+	//UE_LOG(LogTemp, Warning, TEXT("Cos %f"), acosf(-HitDotP));
 	float HitAngle = FMath::RadiansToDegrees(acosf(-HitDotP));
 	FRotator Rotation = CurrentSpriteFlip->GetComponentRotation();
 	Rotation.Pitch += HitAngle;
 	Rotation.Roll = 0;
 	Rotation.Yaw = 0;
+	//UE_LOG(LogTemp, Warning, TEXT("Hit angle %f"), HitAngle);
+	//UE_LOG(LogTemp, Warning, TEXT("Rotation %f"), Rotation.Pitch);
 	//CurrentSpriteFlip->SetRelativeRotation(Rotation);
 	CurrentSpriteFlip->SetRelativeRotationExact(Rotation);
 
