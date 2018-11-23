@@ -15,6 +15,10 @@ class MRORB_API UScoreSystemComponent : public UActorComponent
 public:
 	UScoreSystemComponent();
 	class UTextRenderComponent* ScoreRenderText;
+	UTextRenderComponent* ScoreComboText;
+	//class UMaterialParameterCollection* MaterialParameterCollectionAsset;
+	//class UColorCollection
+	//class UMaterialParameterCollectionInstance* inst;
 
 	UFUNCTION(BlueprintCallable)
 		void AddScore(int score);
@@ -47,6 +51,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void SetScoreRenderText(UTextRenderComponent* render);
 	UFUNCTION(BlueprintCallable)
+		void SetComboRenderText(UTextRenderComponent* render);
+	UFUNCTION(BlueprintCallable)
 		void SetScoreUIHeight(float height);
 
 	void SetScore();
@@ -57,16 +63,17 @@ protected:
 	FTimerHandle Timer;
 	int Countdown;
 	int SecureScore;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		int SavedLifetimeScore;
+	int CurrentCombo;
 
 	float speed;
 	float ScoreUIHeight;
 
 	bool Slowing;
+	bool bDoOnce;
+
 
 	FString ScoreString;
+	FString ComboString;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		FString SavedLifetimeScoreInString;
@@ -77,11 +84,14 @@ protected:
 		int CurrentScore;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int SweetSpotComboAmount;;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int SavedLifetimeScore;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		bool bScoreHasChanged;
 
 public:
 
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 };

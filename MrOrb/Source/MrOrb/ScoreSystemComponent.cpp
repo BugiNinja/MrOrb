@@ -6,14 +6,15 @@
 #include "Components/TextRenderComponent.h"
 #include "PlayerSaveData.h"
 #include "Kismet/GameplayStatics.h"
+#include "Engine/World.h"
 
 //Debugs
-//#include <EngineGlobals.h>
-//#include <Runtime/Engine/Classes/Engine/Engine.h>
+#include <EngineGlobals.h>
+#include <Runtime/Engine/Classes/Engine/Engine.h>
 
 UScoreSystemComponent::UScoreSystemComponent()
 {
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 
 }
 
@@ -25,7 +26,6 @@ void UScoreSystemComponent::BeginPlay()
 	Slowing = false;
 	LoadScoreFromMemory();
 	SetLifetimeScore();
-
 }
 
 void UScoreSystemComponent::AddScore(int score)
@@ -122,6 +122,7 @@ void UScoreSystemComponent::ChangeScoreInMemory(int amounttochange)
 void UScoreSystemComponent::SetSweetSpotComboAmount(int amount) {SweetSpotComboAmount = amount; return; }
 void UScoreSystemComponent::SetScoreHasChanged(bool changed) { bScoreHasChanged = changed; return; }
 void UScoreSystemComponent::SetScoreRenderText(UTextRenderComponent* render){ ScoreRenderText = render; }
+void UScoreSystemComponent::SetComboRenderText(UTextRenderComponent * render){	ScoreComboText = render; }
 void UScoreSystemComponent::SetScoreUIHeight(float height) { ScoreUIHeight = height; return; }
 
 void UScoreSystemComponent::SetLifetimeScore() 
@@ -210,6 +211,36 @@ int UScoreSystemComponent::CalculateCombo(int combo)
 	{
 		return 0;
 	}
+}
+
+void UScoreSystemComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (GetSweetSpotComboAmount() != CurrentCombo)
+	{
+		CurrentCombo = SweetSpotComboAmount;
+		if (CurrentCombo == 0)
+		{
+			ScoreComboText->SetText(FText::FromString(""));
+		}
+		else
+		{
+			ComboString = FString::FromInt(CurrentCombo);
+			ScoreComboText->SetText(FText::FromString(ComboString));
+		}
+	}
+	//if (bDoOnce && SweetSpotComboAmount < 5)
+	//{
+	//	inst = GetWorld()->GetParameterCollectionInstance(MaterialParameterCollectionAsset);
+	//	inst->SetVectorParameterValue();
+	//	bDoOnce = false;
+	//}
+	//if (SweetSpotComboAmount >= 5 && !bDoOnce)
+	//{
+	//	bDoOnce = true;
+	//}
+
 }
 
 

@@ -111,6 +111,8 @@ bool UCoinSystem::CollidedWithPlayer()
 			//Glow->ToggleVisibility();
 			BoxCollider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 			bResetNeeded = true;
+
+
 			return true;
 		}
 		else
