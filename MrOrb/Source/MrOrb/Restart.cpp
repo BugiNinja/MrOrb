@@ -35,7 +35,14 @@ void ARestart::RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpr
 	UE_LOG(LogTemp, Warning, TEXT("RESTART"));
 }
 
-void ARestart::Continue()
+void ARestart::Continue(APaperCharacter* player, UCameraComponent* cam, USpringArmComponent* arm, float CameraZoom, FVector wantedPlayerPosZ)
 {
-	// code
+	FVector armPos = FVector(wantedPlayerPosZ.X, wantedPlayerPosZ.Y, wantedPlayerPosZ.Z + 1000);
+
+	cam->SetOrthoWidth(CameraZoom);
+	arm->SetWorldLocation(armPos);
+	player->SetActorLocation(wantedPlayerPosZ, false, nullptr, ETeleportType::ResetPhysics);
+
+	UE_LOG(LogTemp, Warning, TEXT("CONTINUE"));
+
 }
