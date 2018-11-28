@@ -71,6 +71,8 @@ protected:
 	bool Slowing;
 	bool bDoOnce;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float ScoreTimer;
 
 	FString ScoreString;
 	FString ComboString;
