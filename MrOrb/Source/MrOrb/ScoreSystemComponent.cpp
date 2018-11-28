@@ -37,7 +37,7 @@ void UScoreSystemComponent::AddScore(int score)
 	ChangeScoreInMemory(score);
 	SetLifetimeScore();
 
-	ScoreTimer = 1.5;
+	ScoreTimer = 1.5f;
 	Countdown = SecureScore - CurrentScore;
 	/*if (Countdown <= 0)
 	{
@@ -188,7 +188,7 @@ void UScoreSystemComponent::SetScore()
 
 	//	CurrentScore += 1;
 		
-		speed = (ScoreTimer * ScoreTimer) / 1.5*1.5;
+		speed = (ScoreTimer * ScoreTimer) / (1.5f*1.5f);
 		CurrentScore = FMath::FloorToInt(FMath::Lerp(SecureScore, SecureScore-Countdown,speed));
 		ScoreString = FString::FromInt(CurrentScore);
 		ScoreRenderText->SetText(FText::FromString(ScoreString));
