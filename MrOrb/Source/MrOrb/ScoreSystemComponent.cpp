@@ -24,6 +24,7 @@ void UScoreSystemComponent::BeginPlay()
 	CurrentScore = 0;
 	Countdown = 0;
 	ScoreTimer = 0;
+	TempScore = 0;
 	Slowing = false;
 	LoadScoreFromMemory();
 	SetLifetimeScore();
@@ -36,9 +37,10 @@ void UScoreSystemComponent::AddScore(int score)
 
 	ChangeScoreInMemory(score);
 	SetLifetimeScore();
-
+	TempScore += score;
 	ScoreTimer = 1.5f;
 	Countdown = SecureScore - CurrentScore;
+	ScoreAddRenderText->SetText(FText::FromString("+" + FString::FromInt(TempScore)));
 	/*if (Countdown <= 0)
 	{
 		Countdown = (score);
@@ -125,6 +127,7 @@ void UScoreSystemComponent::ChangeScoreInMemory(int amounttochange)
 void UScoreSystemComponent::SetSweetSpotComboAmount(int amount) {SweetSpotComboAmount = amount; return; }
 void UScoreSystemComponent::SetScoreHasChanged(bool changed) { bScoreHasChanged = changed; return; }
 void UScoreSystemComponent::SetScoreRenderText(UTextRenderComponent* render){ ScoreRenderText = render; }
+void UScoreSystemComponent::SetScoreAddRenderText(UTextRenderComponent* render) { ScoreAddRenderText = render; }
 void UScoreSystemComponent::SetComboRenderText(UTextRenderComponent * render){	ScoreComboText = render; }
 void UScoreSystemComponent::SetScoreUIHeight(float height) { ScoreUIHeight = height; return; }
 
@@ -192,6 +195,7 @@ void UScoreSystemComponent::SetScore()
 		CurrentScore = FMath::FloorToInt(FMath::Lerp(SecureScore, SecureScore-Countdown,speed));
 		ScoreString = FString::FromInt(CurrentScore);
 		ScoreRenderText->SetText(FText::FromString(ScoreString));
+		
 } 
 
 //Calculate combo and display text
@@ -233,13 +237,17 @@ void UScoreSystemComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 		else
 		{
 			ComboString = FString::FromInt(CurrentCombo);
-			ScoreComboText->SetText(FText::FromString(ComboString));
+			ScoreComboText->SetText(FText::FromString("x"+ComboString));
 		}
 	}
 	if (ScoreTimer > 0) {
 		ScoreTimer -= DeltaTime;
 		if (ScoreTimer < 0) ScoreTimer = 0;
 		SetScore();
+	}
+	else {
+		TempScore = 0;
+		ScoreAddRenderText->SetText(FText::FromString(""));
 	}
 	//if (bDoOnce && SweetSpotComboAmount < 5)
 	//{
