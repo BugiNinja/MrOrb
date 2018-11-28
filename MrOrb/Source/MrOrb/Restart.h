@@ -42,5 +42,5 @@ public:
 		void RestartLevel(APaperCharacter* player, UCameraComponent* cam, USpringArmComponent* arm, FVector CameraPos, float CameraZoom, float& HighestPoint, float& PlayerHeight);
 
 	UFUNCTION(BlueprintCallable)
-		void Continue();
+		void Continue(APaperCharacter* player, UCameraComponent* cam, USpringArmComponent* arm, float CameraZoom, FVector wantedPlayerPosZ);
 };
