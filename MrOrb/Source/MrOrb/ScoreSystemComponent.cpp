@@ -23,6 +23,7 @@ void UScoreSystemComponent::BeginPlay()
 	Super::BeginPlay();
 	CurrentScore = 0;
 	Countdown = 0;
+	ScoreTimer = 0;
 	Slowing = false;
 	LoadScoreFromMemory();
 	SetLifetimeScore();
@@ -36,7 +37,9 @@ void UScoreSystemComponent::AddScore(int score)
 	ChangeScoreInMemory(score);
 	SetLifetimeScore();
 
-	if (Countdown <= 0)
+	ScoreTimer = 1.5;
+	Countdown = SecureScore - CurrentScore;
+	/*if (Countdown <= 0)
 	{
 		Countdown = (score);
 
@@ -58,7 +61,7 @@ void UScoreSystemComponent::AddScore(int score)
 		}
 
 		GetOwner()->GetWorldTimerManager().SetTimer(Timer, this, &UScoreSystemComponent::SetScore, speed, true, 0.0f);
-	}
+	}*/
 }
 
 void UScoreSystemComponent::ResetScore()
@@ -67,7 +70,7 @@ void UScoreSystemComponent::ResetScore()
 	SecureScore = 0;
 	SetSweetSpotComboAmount(0);
 	ScoreRenderText->SetText(FText::FromString(""));
-	GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
+	//GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
 	Countdown = 0;
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("RESET"));
 	SetScoreUIHeight(0.0f);
@@ -133,57 +136,60 @@ void UScoreSystemComponent::SetLifetimeScore()
 
 void UScoreSystemComponent::SetScore()
 {
-	if (--Countdown < 10)
-	{
-		if (--Countdown <= -1)
-		{
-			if (CurrentScore != SecureScore)
-			{
-				GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
-				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("CLEARING TIMER and STARTING"));
+	//if (--Countdown < 10)
+	//{
+	//	if (--Countdown <= -1)
+	//	{
+	//		if (CurrentScore != SecureScore)
+	//		{
+	//			GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
+	//			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("CLEARING TIMER and STARTING"));
 
-				Countdown = (SecureScore - CurrentScore);
+	//			Countdown = (SecureScore - CurrentScore);
 
-				if (Countdown < 10)
-				{
-					speed = 0.1f;
-				}
-				else if (Countdown < 100)
-				{
-					speed = 0.02f;
-				}
-				else if (Countdown < 500)
-				{
-					speed = 0.01f;
-				}
-				else
-				{
-					speed = 0.001f;
-				}
+	//			if (Countdown < 10)
+	//			{
+	//				speed = 0.1f;
+	//			}
+	//			else if (Countdown < 100)
+	//			{
+	//				speed = 0.02f;
+	//			}
+	//			else if (Countdown < 500)
+	//			{
+	//				speed = 0.01f;
+	//			}
+	//			else
+	//			{
+	//				speed = 0.001f;
+	//			}
 
-				GetOwner()->GetWorldTimerManager().SetTimer(Timer, this, &UScoreSystemComponent::SetScore, speed, true, 0.0f);
+	//			GetOwner()->GetWorldTimerManager().SetTimer(Timer, this, &UScoreSystemComponent::SetScore, speed, true, 0.0f);
 
-			}
-			else
-			{
-				GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
-				bScoreHasChanged = false;
-				Slowing = false;
-				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("ALL DONE!!"));
-				return;
-			}
-		}
-		else if(!Slowing)
-		{
-			Slowing = true;
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, TEXT("SLOWING!!"));
-			GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
-			speed = 0.1f;
-			GetOwner()->GetWorldTimerManager().SetTimer(Timer, this, &UScoreSystemComponent::SetScore, speed, true, 0.0f);
-		}
-	}
+	//		}
+	//		else
+	//		{
+	//			GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
+	//			bScoreHasChanged = false;
+	//			Slowing = false;
+	//			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("ALL DONE!!"));
+	//			return;
+	//		}
+	//	}
+	//	else if(!Slowing)
+	//	{
+	//		Slowing = true;
+	//		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, TEXT("SLOWING!!"));
+	//		GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
+	//		speed = 0.1f;
+	//		GetOwner()->GetWorldTimerManager().SetTimer(Timer, this, &UScoreSystemComponent::SetScore, speed, true, 0.0f);
+	//	}
+	//}
 
-		CurrentScore += 1;
+	//	CurrentScore += 1;
+		
+		speed = (ScoreTimer * ScoreTimer) / 1.5*1.5;
+		CurrentScore = FMath::FloorToInt(FMath::Lerp(SecureScore, SecureScore-Countdown,speed));
 		ScoreString = FString::FromInt(CurrentScore);
 		ScoreRenderText->SetText(FText::FromString(ScoreString));
 } 
@@ -229,6 +235,11 @@ void UScoreSystemComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 			ComboString = FString::FromInt(CurrentCombo);
 			ScoreComboText->SetText(FText::FromString(ComboString));
 		}
+	}
+	if (ScoreTimer > 0) {
+		ScoreTimer -= DeltaTime;
+		if (ScoreTimer < 0) ScoreTimer = 0;
+		SetScore();
 	}
 	//if (bDoOnce && SweetSpotComboAmount < 5)
 	//{
