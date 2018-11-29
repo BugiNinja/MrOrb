@@ -19,9 +19,9 @@ void UCoinSystem::BeginPlay()
 	Super::BeginPlay();
 
 	//Load Assets for coins
-	//FiftyCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Triangle.SPR_Triangle"), NULL, LOAD_None, NULL);
-	//FiveHundredCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Rectangle.SPR_Rectangle"), NULL, LOAD_None, NULL);
-	//ThousandCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Poly5.SPR_Poly5"), NULL, LOAD_None, NULL);
+	FiftyCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Triangle.SPR_Triangle"), NULL, LOAD_None, NULL);
+	FiveHundredCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Rectangle.SPR_Rectangle"), NULL, LOAD_None, NULL);
+	ThousandCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Poly5.SPR_Poly5"), NULL, LOAD_None, NULL);
 	//FirstMaterial = LoadObject<UMaterial>(NULL, TEXT("/Game/Art/Materials/SPR_Player1.SPR_Player1"), NULL, LOAD_None, NULL);
 	//SecondMaterial = LoadObject<UMaterial>(NULL, TEXT("/Game/Art/Materials/M_Collectible.M_Collectible"), NULL, LOAD_None, NULL);
 
@@ -87,13 +87,13 @@ void UCoinSystem::SetupCoin()
 	else if (number == FMath::RandRange(0, 5))
 	{
 		CoinValue = 500; // 500
-		//CurrentSprite->SetSprite(FiveHundredCoinSprite);
+		CurrentSprite->SetSprite(FiveHundredCoinSprite);
 		//CurrentSprite->SetMaterial(0, SecondMaterial);
 	}
 	else
 	{
 		CoinValue = 50; // 50
-		//CurrentSprite->SetSprite(FiftyCoinSprite);
+		CurrentSprite->SetSprite(FiftyCoinSprite);
 		//CurrentSprite->SetMaterial(0, SecondMaterial);
 	}
 }

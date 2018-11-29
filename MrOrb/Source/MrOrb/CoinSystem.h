@@ -34,9 +34,9 @@ protected:
 	class UScoreSystemComponent* CurrentScoreSystem;
 	class USceneComponent* ThisObject;
 
-	//class UPaperSprite* FiftyCoinSprite;
-	//UPaperSprite* FiveHundredCoinSprite;
-	//UPaperSprite* ThousandCoinSprite;
+	class UPaperSprite* FiftyCoinSprite;
+	UPaperSprite* FiveHundredCoinSprite;
+	UPaperSprite* ThousandCoinSprite;
 
 	//UMaterial* FirstMaterial;
 	//UMaterial* SecondMaterial;
