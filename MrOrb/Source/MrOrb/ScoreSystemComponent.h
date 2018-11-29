@@ -15,6 +15,7 @@ class MRORB_API UScoreSystemComponent : public UActorComponent
 public:
 	UScoreSystemComponent();
 	class UTextRenderComponent* ScoreRenderText;
+	UTextRenderComponent* ScoreTransparentRenderText;
 	UTextRenderComponent* ScoreAddRenderText;
 	UTextRenderComponent* ScoreComboText;
 	//class UMaterialParameterCollection* MaterialParameterCollectionAsset;
@@ -55,6 +56,8 @@ public:
 		void SetScoreAddRenderText(UTextRenderComponent* render);
 	UFUNCTION(BlueprintCallable)
 		void SetComboRenderText(UTextRenderComponent* render);
+	UFUNCTION(BlueprintCallable)
+		void SetScoreTransparentRenderText(UTextRenderComponent* render);
 	UFUNCTION(BlueprintCallable)
 		void SetScoreUIHeight(float height);
 

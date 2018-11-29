@@ -72,6 +72,7 @@ void UScoreSystemComponent::ResetScore()
 	SecureScore = 0;
 	SetSweetSpotComboAmount(0);
 	ScoreRenderText->SetText(FText::FromString(""));
+	ScoreTransparentRenderText->SetText(FText::FromString(""));
 	//GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
 	Countdown = 0;
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("RESET"));
@@ -129,6 +130,7 @@ void UScoreSystemComponent::SetScoreHasChanged(bool changed) { bScoreHasChanged 
 void UScoreSystemComponent::SetScoreRenderText(UTextRenderComponent* render){ ScoreRenderText = render; }
 void UScoreSystemComponent::SetScoreAddRenderText(UTextRenderComponent* render) { ScoreAddRenderText = render; }
 void UScoreSystemComponent::SetComboRenderText(UTextRenderComponent * render){	ScoreComboText = render; }
+void UScoreSystemComponent::SetScoreTransparentRenderText(UTextRenderComponent * render) { ScoreTransparentRenderText = render; }
 void UScoreSystemComponent::SetScoreUIHeight(float height) { ScoreUIHeight = height; return; }
 
 void UScoreSystemComponent::SetLifetimeScore() 
@@ -195,6 +197,7 @@ void UScoreSystemComponent::SetScore()
 		CurrentScore = FMath::FloorToInt(FMath::Lerp(SecureScore, SecureScore-Countdown,speed));
 		ScoreString = FString::FromInt(CurrentScore);
 		ScoreRenderText->SetText(FText::FromString(ScoreString));
+		ScoreTransparentRenderText->SetText(FText::FromString(ScoreString));
 		
 } 
 
