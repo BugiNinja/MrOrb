@@ -37,6 +37,12 @@ public:
 		bool GetScoreHasChanged();
 	UFUNCTION(BlueprintCallable)
 		float GetScoreUIHeight();
+	UFUNCTION(BlueprintCallable)
+		int GetHighestLifetimeScore();
+	UFUNCTION(BlueprintCallable)
+		int GetHighestLifetimeCombo();
+	UFUNCTION(BlueprintCallable)
+		int GetHighestLifetimeDistance();
 
 
 	UFUNCTION(BlueprintCallable) //Load Score
@@ -62,6 +68,7 @@ public:
 		void SetScoreUIHeight(float height);
 
 	void SetScore();
+	void SaveHighScoresToMemory();
 
 protected:
 	virtual void BeginPlay() override;
@@ -93,8 +100,16 @@ protected:
 		int CurrentScore;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int SweetSpotComboAmount;;
+
+	//SAVED STATS
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int SavedLifetimeScore;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int HighestLifetimeScore;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int HighestLifetimeCombo;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int HighestLifetimeDistance;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		bool bScoreHasChanged;

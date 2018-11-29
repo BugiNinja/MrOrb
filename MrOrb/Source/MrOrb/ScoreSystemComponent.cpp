@@ -68,6 +68,11 @@ void UScoreSystemComponent::AddScore(int score)
 
 void UScoreSystemComponent::ResetScore()
 {
+	if (SecureScore > HighestLifetimeScore)
+	{
+		HighestLifetimeScore = SecureScore;
+	}
+	SaveHighScoresToMemory();
 	CurrentScore = 0;
 	SecureScore = 0;
 	SetSweetSpotComboAmount(0);
@@ -88,6 +93,12 @@ bool UScoreSystemComponent::GetScoreHasChanged(){ return bScoreHasChanged;}
 
 float UScoreSystemComponent::GetScoreUIHeight(){ return ScoreUIHeight; }
 
+int UScoreSystemComponent::GetHighestLifetimeScore(){ return HighestLifetimeScore;}
+
+int UScoreSystemComponent::GetHighestLifetimeCombo(){ return HighestLifetimeCombo; }
+
+int UScoreSystemComponent::GetHighestLifetimeDistance(){ return HighestLifetimeDistance; }
+
 int UScoreSystemComponent::LoadScoreFromMemory()
 {
 	UPlayerSaveData* LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
@@ -98,11 +109,17 @@ int UScoreSystemComponent::LoadScoreFromMemory()
 	if (UGameplayStatics::DoesSaveGameExist(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex))
 	{
 		SavedLifetimeScore = LoadGameInstance->PlayerScore;
+		HighestLifetimeScore = LoadGameInstance->PlayerHighestScore;
+		HighestLifetimeCombo = LoadGameInstance->PlayerHighestCombo;
+		HighestLifetimeDistance = LoadGameInstance->PlayerLongestDistance;
 	}
 	else // Create new save
 	{
 		SaveGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
 		SaveGameInstance->PlayerScore = SavedLifetimeScore;
+		SaveGameInstance->PlayerHighestCombo = 0;
+		SaveGameInstance->PlayerHighestScore = 0;
+		SaveGameInstance->PlayerLongestDistance = 0;
 		UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
 	}
 
@@ -116,10 +133,29 @@ void UScoreSystemComponent::ChangeScoreInMemory(int amounttochange)
 	UPlayerSaveData* LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
 	LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
 
+	SaveGameInstance->PlayerHighestScore = HighestLifetimeScore;
+	SaveGameInstance->PlayerHighestCombo = HighestLifetimeCombo;
+	SaveGameInstance->PlayerLongestDistance = HighestLifetimeDistance;
 	int temp = LoadGameInstance->PlayerScore;
 	SaveGameInstance->PlayerScore = temp + amounttochange;
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
 	SavedLifetimeScore = LoadGameInstance->PlayerScore;
+
+	return;
+}
+
+void UScoreSystemComponent::SaveHighScoresToMemory()
+{
+	UPlayerSaveData* SaveGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
+	UPlayerSaveData* LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveData::StaticClass()));
+	LoadGameInstance = Cast<UPlayerSaveData>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
+
+	SaveGameInstance->PlayerHighestScore = HighestLifetimeScore;
+	SaveGameInstance->PlayerHighestCombo =	HighestLifetimeCombo;
+	SaveGameInstance->PlayerLongestDistance = HighestLifetimeDistance;
+	SaveGameInstance->PlayerScore = SavedLifetimeScore;
+
+	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
 
 	return;
 }
@@ -199,7 +235,8 @@ void UScoreSystemComponent::SetScore()
 		ScoreRenderText->SetText(FText::FromString(ScoreString));
 		ScoreTransparentRenderText->SetText(FText::FromString(ScoreString));
 		
-} 
+}
+
 
 //Calculate combo and display text
 int UScoreSystemComponent::CalculateCombo(int combo)
@@ -229,6 +266,10 @@ int UScoreSystemComponent::CalculateCombo(int combo)
 void UScoreSystemComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	if (GetSweetSpotComboAmount() > HighestLifetimeCombo)
+	{
+		HighestLifetimeCombo = GetSweetSpotComboAmount();
+	}
 
 	if (GetSweetSpotComboAmount() != CurrentCombo)
 	{
