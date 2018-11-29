@@ -47,8 +47,10 @@ public:
 
 	UFUNCTION(BlueprintCallable) //Load Score
 		int LoadScoreFromMemory();  
-	UFUNCTION(BlueprintCallable) //Save Score
+	UFUNCTION(BlueprintCallable) //Change score by specific amount
 		void ChangeScoreInMemory(int amounttochange); 
+	UFUNCTION(BlueprintCallable) // Save
+		void SaveHighScoresToMemory();
 
 	UFUNCTION(BlueprintCallable) 
 		void SetLifetimeScore();
@@ -68,7 +70,7 @@ public:
 		void SetScoreUIHeight(float height);
 
 	void SetScore();
-	void SaveHighScoresToMemory();
+
 
 protected:
 	virtual void BeginPlay() override;

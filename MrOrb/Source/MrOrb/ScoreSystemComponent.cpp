@@ -68,10 +68,6 @@ void UScoreSystemComponent::AddScore(int score)
 
 void UScoreSystemComponent::ResetScore()
 {
-	if (SecureScore > HighestLifetimeScore)
-	{
-		HighestLifetimeScore = SecureScore;
-	}
 	SaveHighScoresToMemory();
 	CurrentScore = 0;
 	SecureScore = 0;
@@ -266,6 +262,12 @@ int UScoreSystemComponent::CalculateCombo(int combo)
 void UScoreSystemComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (SecureScore > HighestLifetimeScore)
+	{
+		HighestLifetimeScore = SecureScore;
+	}
+
 	if (GetSweetSpotComboAmount() > HighestLifetimeCombo)
 	{
 		HighestLifetimeCombo = GetSweetSpotComboAmount();
