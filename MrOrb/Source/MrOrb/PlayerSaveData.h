@@ -20,6 +20,15 @@ public:
 		int PlayerScore;
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
+		int PlayerHighestCombo;
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+		int PlayerLongestDistance;
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+		int PlayerHighestScore;
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
 		FString SaveSlotName;
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
