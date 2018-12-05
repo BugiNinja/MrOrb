@@ -28,6 +28,8 @@ public:
 		void ResetScore();
 	UFUNCTION(BlueprintCallable)
 		int CalculateCombo(int combo);
+	UFUNCTION(BlueprintCallable)
+		int DisplayComboText();
 
 	UFUNCTION(BlueprintCallable)
 		int GetCurrentScore();
@@ -80,6 +82,7 @@ protected:
 	int SecureScore;
 	int CurrentCombo;
 	int TempScore;
+	int CurrentComboText;
 
 	float speed;
 	float ScoreUIHeight;

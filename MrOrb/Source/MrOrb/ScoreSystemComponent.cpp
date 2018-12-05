@@ -78,6 +78,7 @@ void UScoreSystemComponent::ResetScore()
 	Countdown = 0;
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("RESET"));
 	SetScoreUIHeight(0.0f);
+	CurrentComboText = 0;
 	return;
 }
 
@@ -135,7 +136,7 @@ void UScoreSystemComponent::ChangeScoreInMemory(int amounttochange)
 	int temp = LoadGameInstance->PlayerScore;
 	SaveGameInstance->PlayerScore = temp + amounttochange;
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
-	SavedLifetimeScore = LoadGameInstance->PlayerScore;
+	SavedLifetimeScore = SaveGameInstance->PlayerScore;
 
 	return;
 }
@@ -157,7 +158,15 @@ void UScoreSystemComponent::SaveHighScoresToMemory()
 }
 
 //Set functions
-void UScoreSystemComponent::SetSweetSpotComboAmount(int amount) {SweetSpotComboAmount = amount; return; }
+void UScoreSystemComponent::SetSweetSpotComboAmount(int amount) 
+{
+	if (amount == 0)
+	{
+		CurrentComboText = 0;
+	}
+	SweetSpotComboAmount = amount; 
+	return; 
+}
 void UScoreSystemComponent::SetScoreHasChanged(bool changed) { bScoreHasChanged = changed; return; }
 void UScoreSystemComponent::SetScoreRenderText(UTextRenderComponent* render){ ScoreRenderText = render; }
 void UScoreSystemComponent::SetScoreAddRenderText(UTextRenderComponent* render) { ScoreAddRenderText = render; }
@@ -234,22 +243,28 @@ void UScoreSystemComponent::SetScore()
 }
 
 
-//Calculate combo and display text
+//Calculate combo 
 int UScoreSystemComponent::CalculateCombo(int combo)
 {
-	if (combo < 5)
+	if (combo % 5 != 0)
 	{
 		return 0;
 	}
-	else if (combo % 15 == 0)
+
+	else if (combo % 5 == 0 && combo <= 30)
 	{
-		return 3;
+		return 1;
 	}
-	else if (combo % 10 == 0)
+
+	else if (combo % 10 == 0 && combo > 30 && combo <= 50)
 	{
-		return 2;
+		return 1;
 	}
-	else if (combo % 5 == 0)
+	else if (combo == 70)
+	{
+		return 1;
+	}
+	else if (combo % 50 && combo >= 100)
 	{
 		return 1;
 	}
@@ -257,6 +272,13 @@ int UScoreSystemComponent::CalculateCombo(int combo)
 	{
 		return 0;
 	}
+
+}
+
+int UScoreSystemComponent::DisplayComboText()
+{
+	CurrentComboText += 1;
+	return CurrentComboText;
 }
 
 void UScoreSystemComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
