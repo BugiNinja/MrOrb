@@ -4,6 +4,7 @@
 #include "TimerManager.h"
 //#include "GameFramework/Actor.h"
 #include "Components/TextRenderComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "PlayerSaveData.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
@@ -34,6 +35,7 @@ void UScoreSystemComponent::AddScore(int score)
 {
 	bScoreHasChanged = true;
 	SecureScore += score;
+	ScoreGlow->SetVisibility(true);
 
 	ChangeScoreInMemory(score);
 	SetLifetimeScore();
@@ -79,6 +81,8 @@ void UScoreSystemComponent::ResetScore()
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("RESET"));
 	SetScoreUIHeight(0.0f);
 	CurrentComboText = 0;
+	ComboGlow->SetVisibility(false);
+	ScoreGlow->SetVisibility(false);
 	return;
 }
 
@@ -163,6 +167,11 @@ void UScoreSystemComponent::SetSweetSpotComboAmount(int amount)
 	if (amount == 0)
 	{
 		CurrentComboText = 0;
+		ComboGlow->SetVisibility(false);
+	}
+	else
+	{
+		ComboGlow->SetVisibility(true);
 	}
 	SweetSpotComboAmount = amount; 
 	return; 
@@ -173,6 +182,11 @@ void UScoreSystemComponent::SetScoreAddRenderText(UTextRenderComponent* render) 
 void UScoreSystemComponent::SetComboRenderText(UTextRenderComponent * render){	ScoreComboText = render; }
 void UScoreSystemComponent::SetScoreTransparentRenderText(UTextRenderComponent * render) { ScoreTransparentRenderText = render; }
 void UScoreSystemComponent::SetScoreUIHeight(float height) { ScoreUIHeight = height; return; }
+void UScoreSystemComponent::SetComboGlowAndScoreGlow(UStaticMeshComponent * comboglow, UStaticMeshComponent* scoreglow)
+{ 
+	ComboGlow = comboglow; 
+	ScoreGlow = scoreglow;
+}
 
 void UScoreSystemComponent::SetLifetimeScore() 
 { 

@@ -18,6 +18,8 @@ public:
 	UTextRenderComponent* ScoreTransparentRenderText;
 	UTextRenderComponent* ScoreAddRenderText;
 	UTextRenderComponent* ScoreComboText;
+	class UStaticMeshComponent* ComboGlow;
+	UStaticMeshComponent* ScoreGlow;
 	//class UMaterialParameterCollection* MaterialParameterCollectionAsset;
 	//class UColorCollection
 	//class UMaterialParameterCollectionInstance* inst;
@@ -70,6 +72,8 @@ public:
 		void SetScoreTransparentRenderText(UTextRenderComponent* render);
 	UFUNCTION(BlueprintCallable)
 		void SetScoreUIHeight(float height);
+	UFUNCTION(BlueprintCallable)
+		void SetComboGlowAndScoreGlow(UStaticMeshComponent* comboglow, UStaticMeshComponent* scoreglow);
 
 	void SetScore();
 
