@@ -167,12 +167,13 @@ void UScoreSystemComponent::SetSweetSpotComboAmount(int amount)
 	if (amount == 0)
 	{
 		CurrentComboText = 0;
-		ComboGlow->SetVisibility(false);
+		//ComboGlow->SetVisibility(false);
 	}
 	else
 	{
 		ComboGlow->SetVisibility(true);
 	}
+
 	SweetSpotComboAmount = amount; 
 	return; 
 }
