@@ -23,7 +23,6 @@ void UCoinSystem::BeginPlay()
 	FiveHundredCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Rectangle.SPR_Rectangle"), NULL, LOAD_None, NULL);
 	ThousandCoinSprite = LoadObject<UPaperSprite>(NULL, TEXT("/Game/Art/Sprites/SPR_Poly5.SPR_Poly5"), NULL, LOAD_None, NULL);
 
-	TArray<int32> IntArray;
 	FirstMaterial = LoadObject<UMaterial>(NULL, TEXT("/Game/Art/Materials/M_Coin.M_Coin"), NULL, LOAD_None, NULL);
 	SecondMaterial = LoadObject<UMaterialInstance>(NULL, TEXT("/Game/Art/Materials/M_Coin_Inst.M_Coin_Inst"), NULL, LOAD_None, NULL);
 
@@ -147,6 +146,7 @@ void UCoinSystem::ResetCoin()
 	CurrentSprite->SetMaterial(0, FirstMaterial);
 	Glow->SetMaterial(0, FirstGlowMaterial);
 	SetupCoin();
+	//
 	return;
 }
 
@@ -156,111 +156,108 @@ void UCoinSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (CurrentScoreSystem->GetSweetSpotComboAmount() <= 1 && !ComboOn)
+	if (!bResetNeeded)
 	{
-		return;
-	}
 
-	else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 14 && ComboCoin == 15 && !ComboOn)
-	{
-		ComboOn = true;
-		Glow->SetVisibility(true);
-		CurrentSprite->SetVisibility(true);
-		//CurrentSprite->ToggleVisibility();
-		//CurrentSprite->SetSprite(FiveHundredCoinSprite);
-		//Glow->ToggleVisibility();
-		CurrentSprite->SetMaterial(0, SecondMaterial);
-		Glow->SetMaterial(0, SecondGlowMaterial);
-		bCanPickUp = true;
-		return;
-	}
-	else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 9 && ComboCoin == 10 && !ComboOn)
-	{
-		ComboOn = true;
-		Glow->SetVisibility(true);
-		CurrentSprite->SetVisibility(true);
-		//CurrentSprite->ToggleVisibility();
-		//CurrentSprite->SetSprite(FiveHundredCoinSprite);
-		//Glow->ToggleVisibility();
-		CurrentSprite->SetMaterial(0, SecondMaterial);
-		Glow->SetMaterial(0, SecondGlowMaterial);
-		bCanPickUp = true;
-		return;
-	}
-	else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 4 && ComboCoin == 5 && !ComboOn)
-	{
-		ComboOn = true;
-		Glow->SetVisibility(true);
-		CurrentSprite->SetVisibility(true);
-		//CurrentSprite->ToggleVisibility();
-		//CurrentSprite->SetSprite(FiveHundredCoinSprite);
-		//Glow->ToggleVisibility();
-		CurrentSprite->SetMaterial(0, SecondMaterial);
-		Glow->SetMaterial(0, SecondGlowMaterial);
-		bCanPickUp = true;
-		return;
-	}
-	else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() <= 1 && ComboOn)
-	{
-		ComboOn = false;
-		CurrentSprite->SetMaterial(0, FirstMaterial);
-		Glow->SetMaterial(0, FirstGlowMaterial);
-	//	CurrentSprite->SetSprite(nullptr);
-	//	Glow->ToggleVisibility();
-	//	bCanPickUp = false;
-		return;
-	}
-
-	//Change coins on runtime depending on Combo
-	else if (CurrentScoreSystem->GetSweetSpotComboAmount() > 4 && !ComboOn && !bComboCoin)
-	{
-		ComboOn = true;
-
-		//UKismetMaterialLibrary::SetVectorParameterValue(GetWorld(), ColorCollection, "Collectible 1",Color2);
-
-		//ColorCollection->SetVectorParameterValue(FName(TEXT("Collectible 1")), Color2);
-
-		if (CoinValue == 50)
+		if (CurrentScoreSystem->GetSweetSpotComboAmount() <= 1 && !ComboOn)
 		{
-			//CurrentSprite->SetSprite(FiftyCoinSprite);
-			CoinValue = 100; // 100
+			return;
+		}
+
+		else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 14 && ComboCoin == 15 && !ComboOn)
+		{
+			ComboOn = true;
+			Glow->SetVisibility(true);
+			CurrentSprite->SetVisibility(true);
 			CurrentSprite->SetMaterial(0, SecondMaterial);
 			Glow->SetMaterial(0, SecondGlowMaterial);
+			bCanPickUp = true;
+			return;
 		}
-		else if (CoinValue == 500)
+		else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 9 && ComboCoin == 10 && !ComboOn)
 		{
-			//CurrentSprite->SetSprite(FiveHundredCoinSprite);
-			CoinValue = 1000; // 1000
+			ComboOn = true;
+			Glow->SetVisibility(true);
+			CurrentSprite->SetVisibility(true);
 			CurrentSprite->SetMaterial(0, SecondMaterial);
 			Glow->SetMaterial(0, SecondGlowMaterial);
+			bCanPickUp = true;
+			return;
 		}
-		return;
-	}
-	else if (CurrentScoreSystem->GetSweetSpotComboAmount() <= 1 && ComboOn && !bComboCoin)
-	{
-		ComboOn = false;
-		//UKismetMaterialLibrary::SetVectorParameterValue(GetWorld(), ColorCollection, "Collectible 1", Color2);
-		//ColorCollection->SetVectorParameterValue(FName(TEXT("Collectible 1")), Color1);
-		CurrentSprite->SetMaterial(0, FirstMaterial);
-		Glow->SetMaterial(0, FirstGlowMaterial);
-		//if (CoinValue == 100)
-		//{
-		//	CurrentSprite->SetSprite(FiftyCoinSprite);
-		//	CoinValue = 50; // 50
-		//	CurrentSprite->SetMaterial(0, SecondMaterial);
-		//}
-		//else if (CoinValue == 1000)
-		//{
-		//	CurrentSprite->SetSprite(FiveHundredCoinSprite);
-		//	CoinValue = 500; // 500
-		//	CurrentSprite->SetMaterial(0, SecondMaterial);
-		//}
-		return;
-	}
-	else
-	{
-		return;
-	}
+		else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 4 && ComboCoin == 5 && !ComboOn)
+		{
+			ComboOn = true;
+			Glow->SetVisibility(true);
+			CurrentSprite->SetVisibility(true);
+			CurrentSprite->SetMaterial(0, SecondMaterial);
+			Glow->SetMaterial(0, SecondGlowMaterial);
+			bCanPickUp = true;
+			return;
+		}
+		else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() <= 1 && ComboOn)
+		{
+			ComboOn = false;
+			CurrentSprite->SetMaterial(0, FirstMaterial);
+			Glow->SetMaterial(0, FirstGlowMaterial);
+		//	CurrentSprite->SetSprite(nullptr);
+		//	Glow->ToggleVisibility();
+		//	bCanPickUp = false;
+			return;
+		}
 
+
+		//
+		// Change coins on runtime depending on Combo //
+		//
+		else if (CurrentScoreSystem->GetSweetSpotComboAmount() > 4 && !ComboOn && !bComboCoin)
+		{
+			ComboOn = true;
+
+			//UKismetMaterialLibrary::SetVectorParameterValue(GetWorld(), ColorCollection, "Collectible 1",Color2);
+
+			//ColorCollection->SetVectorParameterValue(FName(TEXT("Collectible 1")), Color2);
+
+			if (CoinValue == 50)
+			{
+				//CurrentSprite->SetSprite(FiftyCoinSprite);
+				CoinValue = 100; // 100
+				CurrentSprite->SetMaterial(0, SecondMaterial);
+				Glow->SetMaterial(0, SecondGlowMaterial);
+			}
+			else if (CoinValue == 500)
+			{
+				//CurrentSprite->SetSprite(FiveHundredCoinSprite);
+				CoinValue = 1000; // 1000
+				CurrentSprite->SetMaterial(0, SecondMaterial);
+				Glow->SetMaterial(0, SecondGlowMaterial);
+			}
+			return;
+		}
+		else if (CurrentScoreSystem->GetSweetSpotComboAmount() <= 1 && ComboOn && !bComboCoin)
+		{
+			ComboOn = false;
+			//UKismetMaterialLibrary::SetVectorParameterValue(GetWorld(), ColorCollection, "Collectible 1", Color2);
+			//ColorCollection->SetVectorParameterValue(FName(TEXT("Collectible 1")), Color1);
+			CurrentSprite->SetMaterial(0, FirstMaterial);
+			Glow->SetMaterial(0, FirstGlowMaterial);
+
+			if (CoinValue == 100)
+			{
+				CurrentSprite->SetSprite(FiftyCoinSprite);
+				CoinValue = 50; // 50
+			}
+			else if (CoinValue == 1000)
+			{
+				CurrentSprite->SetSprite(FiveHundredCoinSprite);
+				CoinValue = 500; // 500
+			}
+			return;
+		}
+		else
+		{
+			return;
+		}
+
+	}
 }
 
