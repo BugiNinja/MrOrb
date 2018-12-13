@@ -158,42 +158,55 @@ void UCoinSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 
 	if (!bResetNeeded)
 	{
+		if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() >= 5 && !ComboOn)
+		{
+			CurrentSprite->SetMaterial(0, SecondMaterial);
+			Glow->SetMaterial(0, SecondGlowMaterial);
+			ComboOn = true;
+		}
 
 		if (CurrentScoreSystem->GetSweetSpotComboAmount() <= 1 && !ComboOn)
 		{
 			return;
 		}
-
-		else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 14 && ComboCoin == 15 && !ComboOn)
+		else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() >= ComboCoin && !bCanPickUp)
 		{
 			ComboOn = true;
 			Glow->SetVisibility(true);
 			CurrentSprite->SetVisibility(true);
-			CurrentSprite->SetMaterial(0, SecondMaterial);
-			Glow->SetMaterial(0, SecondGlowMaterial);
 			bCanPickUp = true;
 			return;
 		}
-		else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 9 && ComboCoin == 10 && !ComboOn)
-		{
-			ComboOn = true;
-			Glow->SetVisibility(true);
-			CurrentSprite->SetVisibility(true);
-			CurrentSprite->SetMaterial(0, SecondMaterial);
-			Glow->SetMaterial(0, SecondGlowMaterial);
-			bCanPickUp = true;
-			return;
-		}
-		else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 4 && ComboCoin == 5 && !ComboOn)
-		{
-			ComboOn = true;
-			Glow->SetVisibility(true);
-			CurrentSprite->SetVisibility(true);
-			CurrentSprite->SetMaterial(0, SecondMaterial);
-			Glow->SetMaterial(0, SecondGlowMaterial);
-			bCanPickUp = true;
-			return;
-		}
+		//else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 14 && ComboCoin == 15 && !ComboOn)
+		//{
+		//	ComboOn = true;
+		//	Glow->SetVisibility(true);
+		//	CurrentSprite->SetVisibility(true);
+		//	CurrentSprite->SetMaterial(0, SecondMaterial);
+		//	Glow->SetMaterial(0, SecondGlowMaterial);
+		//	bCanPickUp = true;
+		//	return;
+		//}
+		//else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 9 && ComboCoin == 10 && !ComboOn)
+		//{
+		//	ComboOn = true;
+		//	Glow->SetVisibility(true);
+		//	CurrentSprite->SetVisibility(true);
+		//	CurrentSprite->SetMaterial(0, SecondMaterial);
+		//	Glow->SetMaterial(0, SecondGlowMaterial);
+		//	bCanPickUp = true;
+		//	return;
+		//}
+		//else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() > 4 && ComboCoin == 5 && !ComboOn)
+		//{
+		//	ComboOn = true;
+		//	Glow->SetVisibility(true);
+		//	CurrentSprite->SetVisibility(true);
+		//	CurrentSprite->SetMaterial(0, SecondMaterial);
+		//	Glow->SetMaterial(0, SecondGlowMaterial);
+		//	bCanPickUp = true;
+		//	return;
+		//}
 		else if (bComboCoin && CurrentScoreSystem->GetSweetSpotComboAmount() <= 1 && ComboOn)
 		{
 			ComboOn = false;
@@ -205,11 +218,15 @@ void UCoinSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 			return;
 		}
 
+		if (ComboCoin)
+		{
+			return;
+		}
 
 		//
 		// Change coins on runtime depending on Combo //
 		//
-		else if (CurrentScoreSystem->GetSweetSpotComboAmount() > 4 && !ComboOn && !bComboCoin)
+		if (CurrentScoreSystem->GetSweetSpotComboAmount() > 4 && !ComboOn && !bComboCoin)
 		{
 			ComboOn = true;
 
