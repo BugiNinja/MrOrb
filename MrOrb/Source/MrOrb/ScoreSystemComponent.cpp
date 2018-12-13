@@ -279,7 +279,7 @@ int UScoreSystemComponent::CalculateCombo(int combo)
 	{
 		return 1;
 	}
-	else if (combo % 50 == 0 && combo >= 100)
+	else if (combo % 50 == 0 && combo >= 100 && combo <= 150)
 	{
 		return 1;
 	}
