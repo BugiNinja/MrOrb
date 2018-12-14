@@ -37,11 +37,14 @@ protected:
 	class UPaperSprite* FiftyCoinSprite;
 	UPaperSprite* FiveHundredCoinSprite;
 	UPaperSprite* ThousandCoinSprite;
-
+	UPROPERTY()
 	UMaterial* FirstMaterial;
+	UPROPERTY()
 	UMaterialInstance* SecondMaterial;
 
+	UPROPERTY()
 	UMaterial* FirstGlowMaterial;
+	UPROPERTY()
 	UMaterialInstance* SecondGlowMaterial;
 
 	class UBoxComponent* BoxCollider;
