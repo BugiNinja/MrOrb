@@ -7,7 +7,7 @@
 
 ARestart::ARestart()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 }
 
 void ARestart::BeginPlay()
