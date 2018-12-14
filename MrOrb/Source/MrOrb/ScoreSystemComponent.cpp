@@ -26,6 +26,7 @@ void UScoreSystemComponent::BeginPlay()
 	Countdown = 0;
 	ScoreTimer = 0;
 	TempScore = 0;
+	HighestPlaytimeCombo = 0;
 	Slowing = false;
 	LoadScoreFromMemory();
 	SetLifetimeScore();
@@ -74,6 +75,7 @@ void UScoreSystemComponent::ResetScore()
 	CurrentScore = 0;
 	SecureScore = 0;
 	SetSweetSpotComboAmount(0);
+	HighestPlaytimeCombo = 0;
 	ScoreRenderText->SetText(FText::FromString(""));
 	ScoreTransparentRenderText->SetText(FText::FromString(""));
 	//GetOwner()->GetWorldTimerManager().ClearTimer(Timer);
@@ -308,6 +310,10 @@ void UScoreSystemComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	if (GetSweetSpotComboAmount() > HighestLifetimeCombo)
 	{
 		HighestLifetimeCombo = GetSweetSpotComboAmount();
+	}
+	if (GetSweetSpotComboAmount() > HighestPlaytimeCombo)
+	{
+		HighestPlaytimeCombo = GetSweetSpotComboAmount();
 	}
 
 	if (GetSweetSpotComboAmount() != CurrentCombo)

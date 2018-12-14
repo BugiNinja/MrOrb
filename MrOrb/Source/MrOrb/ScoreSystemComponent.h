@@ -117,6 +117,8 @@ protected:
 		int HighestLifetimeScore;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int HighestLifetimeCombo;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int HighestPlaytimeCombo;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		int HighestLifetimeDistance;
 
